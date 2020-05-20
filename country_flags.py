@@ -1,276 +1,260 @@
-# Liens internet vers la description des drapeaux du monde
-# https://fr.wikipedia.org/wiki/Galerie_des_drapeaux_des_pays_du_monde
-# https://fr.wikipedia.org/wiki/Liste_des_drapeaux_nationaux_par_proportions
+#
+# Draw country flags with the Python Turtle. Have fun!
+#
+# Peace, coolcornucopia.
+#
+# Python ressources:
+#   https://docs.python.org/3/library/turtle.html
+#
+# Wikipedia ressources:
+#   https://en.wikipedia.org/wiki/List_of_aspect_ratios_of_national_flags
+#   https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 
-from turtle import *
+from turtle import Turtle, Screen
+import unicodedata # Use to sort strings with accents, see strip_accents()
 
-# Pour trier les chaines de caractères sans les accents
-# cf strip_accents()
-import unicodedata
+# This is our "current turtle (ct)"
+ct = Turtle()
 
-
-### LES FONCTIONS POUR DESSINER DES FORMES SIMPLES ###
-
-# Cette fonction sert à se déplacer et à mettre
-# l'orientation par défaut
-def prepare_dessin(x, y):
-    penup()
-    goto(x, y)
-    # On met l'orientation par défaut vers la droite
-    # En mode standard, 0=est 90=nord 180=ouest 270=sud
-    # En mode logo, 0=nord 90=est 180=sud 270=ouest
-    # ici nous considérons que nous sommes en mode standard
-    setheading(0)
-    pendown()
-
-def rectangle(x, y, longueur, hauteur):
-    prepare_dessin(x, y)
-    forward(longueur)
-    right(90)
-    forward(hauteur)
-    right(90)
-    forward(longueur)
-    right(90)
-    forward(hauteur)
-
-def rectangle_plein(x, y, longueur, hauteur):
-    begin_fill()
-    rectangle(x, y, longueur, hauteur)
-    end_fill()
-
-def carre(x, y, longueur):
-    rectangle(x, y, longueur, longueur)
-
-def carre_plein(x, y, longueur):
-    rectangle_plein(x, y, longueur, longueur)
-
-# On utilise le diamètre plutot que le rayon
-# car on sait plus facilement comment faire
-# se toucher deux objets (on évite le x2)
-def cercle(centre_x, centre_y, diametre):
-    # on recentre le cercle
-    prepare_dessin(centre_x, centre_y - diametre / 2)
-    circle(diametre / 2)
-
-def cercle_plein(centre_x, centre_y, diametre):
-    begin_fill()
-    cercle(centre_x, centre_y, diametre)
-    end_fill()
+# TODO (resolution, default white background)
+screen = Screen()
 
 
-# La croix est inscrite à l'intérieur d'un cercle de
-# diamètre "longueur"
-def croix(centre_x, centre_y, longueur):
-    # On bouge à gauche de la croix et on trace
-    prepare_dessin(centre_x - (longueur / 2), centre_y)
-    forward(longueur)
-    # On bouge en haut de la croix et on trace
-    prepare_dessin(centre_x, centre_y + (longueur / 2))
-    right(90)
-    forward(longueur)
 
-# L'étoile est "débout" avec les "bras" ouverts à
-# l'horizontal et une envergure de "longueur"
-# La fonction renvoie le rectangle contenant
-# exactement l'étoile, pratique pour les aligner :-)
-# L'algo ci-dessous est une version adaptée de
+### Drawing primitives ###
+
+# Useful fonction to move the pen and reset the turtle orientation
+def prepare_drawing(x, y):
+    ct.penup()
+    ct.goto(x, y)
+    # The orientation is set by default to the right.
+    # In standard mode: 0=east 90=north 180=west 270=south
+    # In logo mode: 0=north 90=east 180=south 270=west
+    # Here we are in the standard mode
+    ct.setheading(0)
+    ct.pendown()
+
+def rectangle(x, y, length, height):
+    prepare_drawing(x, y)
+    # Note: we may use a loop but it does not bring that much
+    ct.forward(length)
+    ct.right(90)
+    ct.forward(height)
+    ct.right(90)
+    ct.forward(length)
+    ct.right(90)
+    ct.forward(height)
+
+def rectangle_filled(x, y, length, height):
+    ct.begin_fill()
+    rectangle(x, y, length, height)
+    ct.end_fill()
+
+def square(x, y, length):
+    rectangle(x, y, length, length)
+
+def square_filled(x, y, length):
+    rectangle_filled(x, y, length, length)
+
+# For the circle, use the diameter instead of the radius because it is
+# then easier to make objects touch themselves, avoiding x2 in user code.
+def circle(center_x, center_y, diameter):
+    # Move the circle center following Turtle circle() usage
+    prepare_drawing(center_x, center_y - diameter / 2)
+    ct.circle(diameter / 2)
+
+def circle_filled(center_x, center_y, diameter):
+    ct.begin_fill()
+    circle(center_x, center_y, diameter)
+    ct.end_fill()
+
+# The cross is inside a "length" diameter circle
+def cross(center_x, center_y, length):
+    # Move on the cross left then draw
+    prepare_drawing(center_x - (length / 2), center_y)
+    ct.forward(length)
+    # Move on the cross top then draw
+    prepare_drawing(center_x, center_y + (length / 2))
+    ct.right(90)
+    ct.forward(length)
+
+# This five pointed star function draws a star "standing with arms open
+# horizontally" and a span of "length" and returns the coordinates and sizes
+# of the surrounding rectangle, it is then easier to align the star with
+# other shapes. The drawing algorithm has been adapted from
 # https://stackoverflow.com/questions/26356543/turtle-graphics-draw-a-star
-def etoile_5_branches(centre_x, centre_y, longueur):
+def five_pointed_star(center_x, center_y, length):
     # https://rechneronline.de/pi/pentagon.php
-    # d = longueur
-    # a = côté du pentagone = 0,618 * d
-    # h = hauteur = 0,951 * d
-    # ri = rayon cercle inscrit = 0,425 * d
-    # rc = rayon cercle circonscrit = 0,526 * d
-    d = longueur
+    # d = length
+    # a = pentagon side = 0,618 * d
+    # h = height = 0,951 * d
+    # ri = radius of the inscribed circle = 0,425 * d
+    # rc = radius of the circumscribed circle = 0,526 * d
+    d = length
     h = 0.951 * d
     rc = 0.526 * d
 
-    # par défaut 144 pour une étoile "droite", si on met une
-    # autre valeur, l'étoile sera + ou - "pointue"
+    # Default: angle = 144 for a straight star, we may try different
+    # values for a more or less pointed star...
     angle = 144
-    branche = d / 2.6
-    prepare_dessin(centre_x + d / 2 - branche, centre_y + d / 6)
+    branch = d / 2.6
+    prepare_drawing(center_x + d / 2 - branch, center_y + d / 6)
 
     for i in range(5):
-        forward(branche)
-        right(angle)
-        forward(branche)
-        right(72 - angle)
+        ct.forward(branch)
+        ct.right(angle)
+        ct.forward(branch)
+        ct.right((360 / 5) - angle)
 
-    # rectangle autour
-    # rectangle(centre_x - d / 2, centre_y + rc, d, h)
-    # cercle circonscrit
-    # cercle(centre_x, centre_y, rc * 2)
+    # Surrounding rectangle, uncomment to test
+    # rectangle(center_x - d / 2, center_y + rc, d, h)
+    # Circumscribed circle, uncomment to test
+    # circle(center_x, center_y, rc * 2)
 
-    # Retourne les coordonnées et tailles du rectangle autour
-    # cela peut être utile pour coller parfaitement des étoiles
-    # les unes aux autres
-    return centre_x - d / 2, centre_y + rc, d, h
+    # Return surrounding rectangle coordinates and sizes.
+    return center_x - d / 2, center_y + rc, d, h
 
-# (lire la description dans etoile_5_branches au dessus)
-def etoile_pleine_5_branches(centre_x, centre_y, longueur):
-    begin_fill()
-    x, y, l, h = etoile_5_branches(centre_x, centre_y, longueur)
-    end_fill()
+# (read five_pointed_star() above function description for details)
+def five_pointed_star_filled(center_x, center_y, length):
+    ct.begin_fill()
+    x, y, l, h = five_pointed_star(center_x, center_y, length)
+    ct.end_fill()
     return x, y, l, h
 
-# ANCIENNE version, non utilisée car pb de remplissage
-def etoile_5_branches2(centre_x, centre_y, longueur):
-    # https://rechneronline.de/pi/pentagon.php
-    # d = longueur
-    # a = côté du pentagone = 0,618 * d
-    # h = hauteur = 0,951 * d
-    # ri = rayon cercle inscrit = 0,425 * d
-    # rc = rayon cercle circonscrit = 0,526 * d
-    d = longueur
-    h = 0.951 * d
-    rc = 0.526 * d
 
-    prepare_dessin(centre_x - d / 2, centre_y + d / 6)
-    for i in range(5):
-        forward(d)
-        right(144)
+### Helper functions for drawing flags ###
 
-    # rectangle autour
-    # rectangle(centre_x - d / 2, centre_y + rc, d, h)
-    # cercle circonscrit
-    # cercle(centre_x, centre_y, rc * 2)
+def rectangle_3_vertical_strips(x, y, length, height,
+                                  col1, col2, col3):
+    l = length / 3
+    ct.color(col1, col1)
+    rectangle_filled(x, y, l, height)
+    ct.color(col2, col2)
+    rectangle_filled(x + l, y, l, height)
+    ct.color(col3, col3)
+    rectangle_filled(x + 2 * l, y, l, height)
+    # Surrounding border
+    ct.color(flag_border_col)
+    rectangle(x, y, length, height)
 
-    # Retourne les coordonnées et tailles du rectangle autour
-    # cela peut être utile pour coller parfaitement des étoiles
-    # les unes aux autres
-    return centre_x - d / 2, centre_y + rc, d, h
+def rectangle_3_horizontal_strips(x, y, length, height,
+                                    col1, col2, col3):
+    h = height / 3
+    ct.color(col1, col1)
+    rectangle_filled(x, y, length, h)
+    ct.color(col2, col2)
+    rectangle_filled(x, y - h, length, h)
+    ct.color(col3, col3)
+    rectangle_filled(x, y - 2 * h, length, h)
+    # Surrounding border
+    ct.color(flag_border_col)
+    rectangle(x, y, length, height)
+
+def rectangle_circle(rect_x, rect_y, length, height,
+                     circ_center_x, circ_center_y, diameter,
+                     rect_col, circ_col):
+    ct.color(rect_col, rect_col)
+    rectangle_filled(rect_x, rect_y, length, height)
+    ct.color(circ_col, circ_col)
+    circle_filled(circ_center_x, circ_center_y, diameter)
+    # Surrounding border
+    ct.color(flag_border_col)
+    rectangle(rect_x, rect_y, length, height)
 
 
+### Country flag drawing functions ###
 
-### LES FONCTIONS POUR AIDER A DESSINER LES DRAPEAUX ###
-def rectangle_3_bandes_verticales(x, y, longueur, hauteur,
-                                  couleur1, couleur2, couleur3):
-    l = longueur / 3
-    color(couleur1, couleur1)
-    rectangle_plein(x, y, l, hauteur)
-    color(couleur2, couleur2)
-    rectangle_plein(x + l, y, l, hauteur)
-    color(couleur3, couleur3)
-    rectangle_plein(x + 2 * l, y, l, hauteur)
-    # On trace maintenant le contour
-    color(contour_drapeau)
-    rectangle(x, y, longueur, hauteur)
-
-def rectangle_3_bandes_horizontales(x, y, longueur, hauteur,
-                                    couleur1, couleur2, couleur3):
-    h = hauteur / 3
-    color(couleur1, couleur1)
-    rectangle_plein(x, y, longueur, h)
-    color(couleur2, couleur2)
-    rectangle_plein(x, y - h, longueur, h)
-    color(couleur3, couleur3)
-    rectangle_plein(x, y - 2 * h, longueur, h)
-    # On trace maintenant le contour
-    color(contour_drapeau)
-    rectangle(x, y, longueur, hauteur)
-
-def rectangle_cercle(rect_x, rect_y, longueur, hauteur,
-                     cerc_x, cerc_y, diametre,
-                     rect_couleur, cerc_couleur):
-    color(rect_couleur, rect_couleur)
-    rectangle_plein(rect_x, rect_y, longueur, hauteur)
-    color(cerc_couleur, cerc_couleur)
-    cercle_plein(cerc_x, cerc_y, diametre)
-    # On trace maintenant le contour
-    color(contour_drapeau)
-    rectangle(rect_x, rect_y, longueur, hauteur)
-
-### LES FONCTIONS POUR DESSINER LES DRAPEAUX ###
-# Avec ces fonctions, on n'est pas obligé de respecter
-# les proportions (ça peut être pratique parfois)
-def drapeau_allemagne(x, y, longueur, hauteur):
-    rectangle_3_bandes_horizontales(x, y, longueur, hauteur,
+# Note Following functions do not take into account directly the
+# aspect ratio and the border, so you can use them directly
+# depending of your need... or via the class with proper aspect ratio :-)
+# TODO re-order by country names
+def flag_Germany(x, y, length, height):
+    rectangle_3_horizontal_strips(x, y, length, height,
                                     '#000', '#D00', '#FFCE00')
 
-def drapeau_armenie(x, y, longueur, hauteur):
-    rectangle_3_bandes_horizontales(x, y, longueur, hauteur,
+def flag_Armenia(x, y, length, height):
+    rectangle_3_horizontal_strips(x, y, length, height,
                                     '#D90012', '#0033A0', '#F2A800')
 
-def drapeau_autriche(x, y, longueur, hauteur):
-    rectangle_3_bandes_horizontales(x, y, longueur, hauteur,
+def flag_Austria(x, y, length, height):
+    rectangle_3_horizontal_strips(x, y, length, height,
                                     '#ED2939', 'white', '#ED2939')
 
-def drapeau_bangladesh(x, y, longueur, hauteur):
-    rectangle_cercle(x, y, longueur, hauteur,
-                     x + longueur * 450/1000, y - hauteur / 2, 2 * longueur / 5,
+def flag_Bangladesh(x, y, length, height):
+    rectangle_circle(x, y, length, height,
+                     x + length * 450/1000, y - height / 2, 2 * length / 5,
                      '#006a4e', '#f42a41')
 
-def drapeau_belgique(x, y, longueur, hauteur):
-    rectangle_3_bandes_verticales(x, y, longueur, hauteur,
+def flag_Belgium(x, y, length, height):
+    rectangle_3_vertical_strips(x, y, length, height,
                                   'black', '#FAE042', '#ED2939')
 
-def drapeau_benin(x, y, longueur, hauteur):
-    h = hauteur / 2
-    color('#FCD116')
-    rectangle_plein(x, y, longueur, h)
-    color('#E8112D')
-    rectangle_plein(x, y - h, longueur, h)
-    color('#008751')
-    rectangle_plein(x, y, longueur / 2.5, hauteur)
+def flag_Benin(x, y, length, height):
+    h = height / 2
+    ct.color('#FCD116')
+    rectangle_filled(x, y, length, h)
+    ct.color('#E8112D')
+    rectangle_filled(x, y - h, length, h)
+    ct.color('#008751')
+    rectangle_filled(x, y, length / 2.5, height)
 
-def drapeau_birmanie(x, y, longueur, hauteur):
-    rectangle_3_bandes_horizontales(x, y, longueur, hauteur,
+def flag_Myanmar(x, y, length, height):
+    rectangle_3_horizontal_strips(x, y, length, height,
                                     '#FECB00', '#34B233', '#EA2839')
-    color('white')
-    h = 2 * hauteur / 3
-    d = h / 0.951  # voir calcul dans etoile_pleine_5_branches()
-    etoile_pleine_5_branches(x + longueur / 2, y - hauteur / 1.92, d)
+    ct.color('white')
+    h = 2 * height / 3
+    d = h / 0.951  # See five_pointed_star_filled() computations
+    five_pointed_star_filled(x + length / 2, y - height / 1.92, d)
 
-def drapeau_bolivie(x, y, longueur, hauteur):
-    rectangle_3_bandes_verticales(x, y, longueur, hauteur,
+def flag_Bolivia(x, y, length, height):
+    rectangle_3_vertical_strips(x, y, length, height,
                                   'black', '#FAE042', '#ED2939')
 
-def drapeau_bulgarie(x, y, longueur, hauteur):
-    rectangle_3_bandes_horizontales(x, y, longueur, hauteur,
+def flag_Bulgaria(x, y, length, height):
+    rectangle_3_horizontal_strips(x, y, length, height,
                                     'white', '#00966E', '#D62612')
 
-def drapeau_cote_d_ivoire(x, y, longueur, hauteur):
-    rectangle_3_bandes_verticales(x, y, longueur, hauteur,
+def flag_Ivory_Coast(x, y, length, height):
+    rectangle_3_vertical_strips(x, y, length, height,
                                   '#f77f00', 'white', '#009e60')
 
-def drapeau_estonie(x, y, longueur, hauteur):
-    rectangle_3_bandes_horizontales(x, y, longueur, hauteur,
+def flag_Estonia(x, y, length, height):
+    rectangle_3_horizontal_strips(x, y, length, height,
                                     '#0072ce', 'black', 'white')
 
-def drapeau_france(x, y, longueur, hauteur):
-    rectangle_3_bandes_verticales(x, y, longueur, hauteur,
+def flag_France(x, y, length, height):
+    rectangle_3_vertical_strips(x, y, length, height,
                                   '#002395', 'white', '#ED2939')
 
-def drapeau_gabon(x, y, longueur, hauteur):
-    rectangle_3_bandes_horizontales(x, y, longueur, hauteur,
+def flag_Gabon(x, y, length, height):
+    rectangle_3_horizontal_strips(x, y, length, height,
                                     '#3a75c4', '#fcd116', '#009e60')
 
-def drapeau_etats_unis(x, y, longueur, hauteur):
-    # Le fond blanc
-    color('white')
-    rectangle_plein(x, y, longueur, hauteur)
-    # Les 7 bandes rouges
-    color('#B22234')
-    h = hauteur / 13  # 13 bandes
+def flag_United_States(x, y, length, height):
+    # White background
+    ct.color('white')
+    rectangle_filled(x, y, length, height)
+    # The seven red strips
+    ct.color('#B22234')
+    h = height / 13  # 7 red + 5 white strips = 13
     yy = y
     for i in range(7):
-        rectangle_plein(x, yy , longueur, h)
+        rectangle_filled(x, yy , length, h)
         yy -= 2 * h
-    # Le rectangle bleu
-    color('#3C3B6E')
-    rectangle_plein(x, y, longueur / 2.5, hauteur * 7 / 13)
-    # Les étoiles
-    color('white')
-    # color('#717095', 'white') # false antialiasing if big flag
-    elx = longueur / 30
-    ely = longueur / 28
+    # The blue rectangle
+    ct.color('#3C3B6E')
+    rectangle_filled(x, y, length / 2.5, height * 7 / 13)
+    # The white stars
+    # TODO is it possible to simplify the 2 loops
+    ct.color('white')
+    # ct.color('#717095', 'white') # false antialiasing if big flag
+    elx = length / 30
+    ely = length / 28
     ey = y - ely
     for yy in range(5):
         ex = x + elx
         for xx in range(6):
-            etoile_pleine_5_branches(ex, ey, elx)
+            five_pointed_star_filled(ex, ey, elx)
             ex += 2 * elx
         ey -= 2 * ely
 
@@ -278,164 +262,173 @@ def drapeau_etats_unis(x, y, longueur, hauteur):
     for yy in range(4):
         ex = x + (2 * elx)
         for xx in range(5):
-            etoile_pleine_5_branches(ex, ey, elx)
+            five_pointed_star_filled(ex, ey, elx)
             ex += 2 * elx
         ey -= 2 * ely
 
-def drapeau_japon(x, y, longueur, hauteur):
-    rectangle_cercle(x, y, longueur, hauteur,
-                     x + longueur / 2, y - hauteur / 2, 2 * longueur / 5,
+def flag_Japan(x, y, length, height):
+    rectangle_circle(x, y, length, height,
+                     x + length / 2, y - height / 2, 2 * length / 5,
                      'white', '#bc002d')
 
 
-### LA SUPER FONCTION POUR AFFICHER TOUS LES DRAPEAUX ###
+### FLAGS MANAGEMENT FUNCTIONS ###
 
-# Une petite classe pour pouvoir manipuler tous les drapeaux
-class Drapeau:
-    proportion_variable = False
-    proportion_defaut = 2/3
-    def __init__(self, pays, proportion, fonction_de_dessin):
-        self.pays = pays
-        if self.proportion_variable:
-            self.proportion = proportion
+class Flag:
+    ratio_variable = False  # TODO find a better way
+    ratio_default = 2/3
+    def __init__(self, country, ratio, drawing_func):
+        self.country = country # TODO better manage country names (language)
+        if self.ratio_variable:
+            self.ratio = ratio
         else:
-            self.proportion = self.proportion_defaut
-        self.fonction_de_dessin = fonction_de_dessin
+            self.ratio = self.ratio_default
+        self.drawing_func = drawing_func
 
-    def dessine(self, x, y, longueur):
-        self.fonction_de_dessin(x, y, longueur,
-                                longueur * self.proportion)
-
-
-# La liste de tous les drapeaux
-drapeaux_list = list()
-drapeaux_list.append(Drapeau("Allemagne", 3/5, drapeau_allemagne))
-drapeaux_list.append(Drapeau("Arménie", 1/2, drapeau_armenie))
-drapeaux_list.append(Drapeau("Autriche", 2/3, drapeau_autriche))
-drapeaux_list.append(Drapeau("Bangladesh", 3/5, drapeau_bangladesh))
-drapeaux_list.append(Drapeau("Belgique", 13/15, drapeau_belgique))
-drapeaux_list.append(Drapeau("Bénin", 2/3, drapeau_benin))
-drapeaux_list.append(Drapeau("Birmanie (Myanmar)", 3/3, drapeau_birmanie))
-
-drapeaux_list.append(Drapeau("Bolivie", 15/22, drapeau_bolivie))
-drapeaux_list.append(Drapeau("Bulgarie", 3/5, drapeau_bulgarie))
-drapeaux_list.append(Drapeau("Côte d'Ivoire", 2/3, drapeau_cote_d_ivoire))
-drapeaux_list.append(Drapeau("Estonie", 7/11, drapeau_estonie))
-drapeaux_list.append(Drapeau("France", 2/3, drapeau_france))
-drapeaux_list.append(Drapeau("Gabon", 3/4, drapeau_gabon))
-
-drapeaux_list.append(Drapeau("États-Unis", 10/19, drapeau_etats_unis))
-drapeau_test = drapeau_birmanie
-
-drapeaux_list.append(Drapeau("Japon", 2/3, drapeau_japon))
+    def draw(self, x, y, length):
+        self.drawing_func(x, y, length,
+                                length * self.ratio)
 
 
-# Fonction pour retirer les accents, notamment pour les tris
-# sinon États-Unis est le dernier de la liste
+# List of all the flags
+# TODO re-order by country names
+flags_list = list()
+flags_list.append(Flag("Germany", 3/5, flag_Germany))
+flags_list.append(Flag("Armenia", 1/2, flag_Armenia))
+flags_list.append(Flag("Austria", 2/3, flag_Austria))
+flags_list.append(Flag("Bangladesh", 3/5, flag_Bangladesh))
+flags_list.append(Flag("Belgium", 13/15, flag_Belgium))
+flags_list.append(Flag("Benin", 2/3, flag_Benin))
+flags_list.append(Flag("Myanmar", 3/3, flag_Myanmar))
+
+flags_list.append(Flag("Bolivia", 15/22, flag_Bolivia))
+flags_list.append(Flag("Bulgaria", 3/5, flag_Bulgaria))
+flags_list.append(Flag("Ivory Coast", 2/3, flag_Ivory_Coast))
+flags_list.append(Flag("Estonia", 7/11, flag_Estonia))
+flags_list.append(Flag("France", 2/3, flag_France))
+flags_list.append(Flag("Gabon", 3/4, flag_Gabon))
+
+flags_list.append(Flag("United States", 10/19, flag_United_States))
+flag_test = flag_Myanmar
+
+flags_list.append(Flag("Japan", 2/3, flag_Japan))
+
+
+# Function to remove accents, useful for sorting, else "États-Unis" (fr)
+# will be the last of the sorting list in French
 # https://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-in-a-python-unicode-string/518232#518232
 def strip_accents(s):
    return ''.join(c for c in unicodedata.normalize('NFD', s)
                   if unicodedata.category(c) != 'Mn')
 
-# On trie la liste en utilisant une fonction lambda
-drapeaux_list.sort(key=lambda x: strip_accents(x.pays))
+# Flag list alphabetical sort thanks to a lambda function
+flags_list.sort(key=lambda x: strip_accents(x.country))
 
 
-def affiche_tous_les_drapeaux(longueur, bord, affiche_texte = False):
+def draw_all_flags(length, border, affiche_texte = False):
     # on récupère la taille de la fenètre
-    fenetre_longueur = window_width()
-    fenetre_largeur = window_height()
-    #setup(fenetre_longueur * 1.0, fenetre_largeur * 1.0)
-    #print(screensize(), window_width(), window_height())
-    nb_drapeaux = len(drapeaux_list)
-    x_depart = -(fenetre_longueur / 2) + bord
-    y_depart = (fenetre_largeur / 2) - bord
-    max_drapeaux_horiz = int((fenetre_longueur - 2 * bord) / longueur)
-    print(max_drapeaux_horiz)
-    bord_int = (fenetre_longueur - (2 * bord)) - (max_drapeaux_horiz * longueur)
-    bord_int /= (max_drapeaux_horiz - 1)
-    if bord_int < 5:
-        max_drapeaux_horiz -= 1
-        bord_int = (fenetre_longueur - (2 * bord)) - (max_drapeaux_horiz * longueur)
-        bord_int /= (max_drapeaux_horiz - 1)
-    x = x_depart
-    y = y_depart
-    print(x,y, bord_int)
-    for i in range(nb_drapeaux):
-        d = drapeaux_list[i]
-        d.dessine(x, y, longueur)
-        x += longueur + bord_int
-        if x > (fenetre_longueur / 2) - bord - longueur:
-            x = x_depart
-            y -= longueur * 2/3 + bord_int
+    window_width = screen.window_width()
+    window_height = screen.window_height()
+    #setup(window_width * 1.0, window_height * 1.0)
+    #print(screensize(), screen.window_width(), screen.window_height())
+    flags_num = len(flags_list)
+    x_start = -(window_width / 2) + border # TODO rename border please
+    y_start = (window_height / 2) - border
+    flags_horiz_max = int((window_width - 2 * border) / length)
+    print(flags_horiz_max)
+    # TODO rename border_inside
+    border_inside = (window_width - (2 * border)) - (flags_horiz_max * length)
+    border_inside /= (flags_horiz_max - 1)
+    if border_inside < 5:
+        flags_horiz_max -= 1
+        border_inside = (window_width - (2 * border)) - (flags_horiz_max * length)
+        border_inside /= (flags_horiz_max - 1)
+    x = x_start
+    y = y_start
+    print(x,y, border_inside)
+    for i in range(flags_num):
+        d = flags_list[i]
+        d.draw(x, y, length)
+        x += length + border_inside
+        if x > (window_width / 2) - border - length:
+            x = x_start
+            y -= length * 2/3 + border_inside
 
 
 
 
-### LE PROGRAMME COMMENCE ICI ###
+### MAIN STARTS HERE BELOW ###
 
 debug = False
 #debug = True
 
-rapide = True
-#rapide = False
-if rapide:
-    # On met la vitesse au maximum
-    speed(0)
-    # On cache la tortue
-    hideturtle()
-    # On va gérer la mise à jour nous même donc on fait
-    # tracer(0). Quand on voudra une mise à jour de l'écran
-    # on fera update()
-    tracer(0)
+fast_draw = True
+#fast_draw = False
+if fast_draw:
+    # Set speed to max   # TODO useful as we use tracer(0)?
+    ct.speed(0)
+    # Hide the turtle
+    ct.hideturtle()
+    # We will manage when needed the scren update with screen.update()
+    screen.tracer(False)
 
-# Bord bleu, intérieur rouge
-color('black', 'red')
+# Blue border, red inside
+ct.color('black', 'red')
 
-# Epaisseur du trait, 10 gros
-pensize(1)
+# Pen thickness
+ct.pensize(1)
 
-# Test de nos primitives, mettre debug = True pour essayer
+# Drawing primitives test (set debug = True above)
 if debug:
-    color('black', 'red')
-    pensize(1)
-    croix(0, 0, 40)
-    cercle(0, 0, 40)
-    cercle_plein(40, 0, 40)
-    carre(60, 20, 40)
-    carre_plein(100, 20, 40)
+    ct.color('black', 'red')
+    ct.pensize(1)
+    cross(0, 0, 40)
+    circle(0, 0, 40)
+    circle_filled(40, 0, 40)
+    square(60, 20, 40)
+    square_filled(100, 20, 40)
+    if fast_draw:
+        screen.update()
+    k = input("Press ENTER to continue")
     rectangle(-20, -20, 80, 40)
-    rectangle_plein(60, -20, 80, 40)
-    #color("black")
-    x, y, l, h = etoile_5_branches(0, -80, 40)
-    rectangle(x, y, l, h) # dessin du rectangle autour de l'étoile
-    etoile_pleine_5_branches(40, -80, 40)
-    if rapide:
-        update()
-    k = input("Appuyez sur ENTREE pour continuer")
-    clear()
+    if fast_draw:
+        screen.update()
+    k = input("Press ENTER to continue")
 
-# TODO prévoir aussi de gérer l'épaisseur du contour
-# avec peut être un déplacement relatif si le contour
-# fait plus de 1 pixel
-# avec reset de l'épaisseur des tracers à l'intérieur
-contour_drapeau = 'black'
+    rectangle_filled(60, -20, 80, 40)
+    #ct.color("black")
+    if fast_draw:
+        screen.update()
+    k = input("Press ENTER to continue")
 
-#drapeau_armenie(0, 0, 100, 100)
-drapeau_test(-300, 200, 400, 400*2/3)
-update()
-k = input("Appuyez sur ENTREE pour continuer")
+    x, y, w, h = five_pointed_star(0, -80, 40)
+    rectangle(x, y, w, h) # Rectangle containing the star
 
+    five_pointed_star_filled(40, -80, 40)
+    if fast_draw:
+        screen.update()
+    k = input("Press ENTER to continue")
+    ct.clear()
+
+
+flag_border_col = 'black'
+
+#flag_armenie(0, 0, 100, 100)
+flag_test(-300, 200, 400, 400*2/3)
+if fast_draw:
+    screen.update()
+k = input("Press ENTER to continue")
+ct.clear()
 
 if debug:
-    print("Liste des pays en ordre alphabétique:")
-    for d in drapeaux_list:
-        print(d.pays)
+    print("Country list in alphabetical order:")
+    for d in flags_list:
+        print(d.country)
 
-print("Il y a déjà " + str(len(drapeaux_list)) +
-      " drapeaux!")
+print("There are already " + str(len(flags_list)) +
+      " flags, great job!")
 
-affiche_tous_les_drapeaux(100, 20)
+draw_all_flags(100, 20)
 
-if rapide:
-    update()
+if fast_draw:
+    screen.update()
