@@ -225,26 +225,23 @@ def flag_United_States(x, y, length, height):
     ct.color('#3C3B6E')
     rectangle_filled(x, y, length / 2.5, 7 * height / 13 - 1)
     # The white stars
-    # TODO is it possible to simplify the 2 loops
     ct.color('white')
-    # ct.color('#717095', 'white') # false antialiasing if big flag
-    elx = length / 30
-    ely = length / 28
-    ey = y - ely
-    for yy in range(5):
-        ex = x + elx
-        for xx in range(6):
-            five_pointed_star_filled(ex, ey, elx)
-            ex += 2 * elx
-        ey -= 2 * ely
-
-    ey = y - (2 * ely)
-    for yy in range(4):
-        ex = x + (2 * elx)
-        for xx in range(5):
-            five_pointed_star_filled(ex, ey, elx)
-            ex += 2 * elx
-        ey -= 2 * ely
+    #ct.color('#717095', 'white') # false antialiasing if big flag
+    star_width = length / 30
+    star_height = length / 28
+    star_y = y - star_height
+    stars_in_row = 5
+    for yy in range(9):
+        if stars_in_row == 6:  # switch between 5 & 6 row stars
+            stars_in_row = 5
+            star_x = x + (2 * star_width)
+        else:
+            stars_in_row = 6
+            star_x = x + star_width
+        for xx in range(stars_in_row):
+            five_pointed_star_filled(star_x, star_y, star_width)
+            star_x += 2 * star_width
+        star_y -= star_height
 
 def flag_Japan(x, y, length, height):
     rectangle_circle(x, y, length, height,
@@ -289,7 +286,7 @@ flags_list.append(Flag("France", 2/3, flag_France))
 flags_list.append(Flag("Gabon", 3/4, flag_Gabon))
 
 flags_list.append(Flag("United States", 10/19, flag_United_States))
-flag_test = flag_Myanmar
+flag_test = flag_United_States
 
 flags_list.append(Flag("Japan", 2/3, flag_Japan))
 
@@ -355,7 +352,7 @@ if fast_draw:
     # We will manage when needed the scren update with screen.update()
     screen.tracer(False)
 
-# Blue border, red inside
+# Black border, red inside
 ct.color('black', 'red')
 
 # Pen thickness
