@@ -124,25 +124,29 @@ def five_pointed_star_filled(center_x, center_y, length):
 
 ### Helper functions for drawing flags ###
 
-def rectangle_3_vertical_strips(x, y, length, height,
-                                  col1, col2, col3):
-    l = length / 3
-    ct.color(col1, col1)
-    rectangle_filled(x, y, l, height)
-    ct.color(col2, col2)
-    rectangle_filled(x + l, y, l, height)
-    ct.color(col3, col3)
-    rectangle_filled(x + 2 * l, y, l, height)
+# TODO better document below functions
+def vertical_strips(x, y, length, height, *colors):
+    nc = len(colors)
+    if nc <= 0:
+        # TODO Better manage error here below
+        print(func_name + ": Bad color value")
+        return
+    l = length / nc  # TODO round?
+    for i in range(nc):
+        ct.color(colors[i])
+        rectangle_filled(x + i * l, y, l, height)
 
-def rectangle_3_horizontal_strips(x, y, length, height,
-                                    col1, col2, col3):
-    h = height / 3
-    ct.color(col1, col1)
-    rectangle_filled(x, y, length, h)
-    ct.color(col2, col2)
-    rectangle_filled(x, y - h, length, h)
-    ct.color(col3, col3)
-    rectangle_filled(x, y - 2 * h, length, h)
+
+def horizontal_strips(x, y, length, height, *colors):
+    nc = len(colors)
+    if nc <= 0:
+        # TODO Better manage error here below
+        print(func_name + ": Bad color value")
+        return
+    h = height / nc  # TODO round?
+    for i in range(nc):
+        ct.color(colors[i])
+        rectangle_filled(x, y - i * h, length, h)
 
 def rectangle_circle(rect_x, rect_y, length, height,
                      circ_center_x, circ_center_y, diameter,
@@ -160,16 +164,13 @@ def rectangle_circle(rect_x, rect_y, length, height,
 # depending of your need... or via the class with proper aspect ratio :-)
 # TODO re-order by country names
 def flag_Germany(x, y, length, height):
-    rectangle_3_horizontal_strips(x, y, length, height,
-                                    '#000', '#D00', '#FFCE00')
+    horizontal_strips(x, y, length, height, '#000', '#D00', '#FFCE00')
 
 def flag_Armenia(x, y, length, height):
-    rectangle_3_horizontal_strips(x, y, length, height,
-                                    '#D90012', '#0033A0', '#F2A800')
+    horizontal_strips(x, y, length, height, '#D90012', '#0033A0', '#F2A800')
 
 def flag_Austria(x, y, length, height):
-    rectangle_3_horizontal_strips(x, y, length, height,
-                                    '#ED2939', 'white', '#ED2939')
+    horizontal_strips(x, y, length, height, '#ED2939', 'white', '#ED2939')
 
 def flag_Bangladesh(x, y, length, height):
     rectangle_circle(x, y, length, height,
@@ -177,8 +178,7 @@ def flag_Bangladesh(x, y, length, height):
                      '#006a4e', '#f42a41')
 
 def flag_Belgium(x, y, length, height):
-    rectangle_3_vertical_strips(x, y, length, height,
-                                  'black', '#FAE042', '#ED2939')
+    vertical_strips(x, y, length, height, 'black', '#FAE042', '#ED2939')
 
 def flag_Benin(x, y, length, height):
     h = height / 2
@@ -190,51 +190,40 @@ def flag_Benin(x, y, length, height):
     rectangle_filled(x, y, length / 2.5, height)
 
 def flag_Myanmar(x, y, length, height):
-    rectangle_3_horizontal_strips(x, y, length, height,
-                                    '#FECB00', '#34B233', '#EA2839')
+    horizontal_strips(x, y, length, height, '#FECB00', '#34B233', '#EA2839')
     ct.color('white')
     h = 2 * height / 3
     d = h / 0.951  # See five_pointed_star_filled() computations
     five_pointed_star_filled(x + length / 2, y - height / 1.92, d)
 
 def flag_Bolivia(x, y, length, height):
-    rectangle_3_vertical_strips(x, y, length, height,
-                                  'black', '#FAE042', '#ED2939')
+    vertical_strips(x, y, length, height, 'black', '#FAE042', '#ED2939')
 
 def flag_Bulgaria(x, y, length, height):
-    rectangle_3_horizontal_strips(x, y, length, height,
-                                    'white', '#00966E', '#D62612')
+    horizontal_strips(x, y, length, height, 'white', '#00966E', '#D62612')
 
 def flag_Ivory_Coast(x, y, length, height):
-    rectangle_3_vertical_strips(x, y, length, height,
-                                  '#f77f00', 'white', '#009e60')
+    vertical_strips(x, y, length, height, '#f77f00', 'white', '#009e60')
 
 def flag_Estonia(x, y, length, height):
-    rectangle_3_horizontal_strips(x, y, length, height,
-                                    '#0072ce', 'black', 'white')
+    horizontal_strips(x, y, length, height, '#0072ce', 'black', 'white')
 
 def flag_France(x, y, length, height):
-    rectangle_3_vertical_strips(x, y, length, height,
-                                  '#002395', 'white', '#ED2939')
+    vertical_strips(x, y, length, height, '#002395', 'white', '#ED2939')
 
 def flag_Gabon(x, y, length, height):
-    rectangle_3_horizontal_strips(x, y, length, height,
-                                    '#3a75c4', '#fcd116', '#009e60')
+    horizontal_strips(x, y, length, height, '#3a75c4', '#fcd116', '#009e60')
 
 def flag_United_States(x, y, length, height):
-    # White background
-    ct.color('white')
-    rectangle_filled(x, y, length, height)
-    # The seven red strips
-    ct.color('#B22234')
-    h = height / 13  # 7 red + 5 white strips = 13
-    yy = y
-    for i in range(7):
-        rectangle_filled(x, yy , length, h)
-        yy -= 2 * h
+    # Red & white strips
+    r = '#B22234'
+    w = 'white'
+    horizontal_strips(x, y, length, height, r, w, r, w, r, w, r, w, r, w,
+                      r, w, r)
     # The blue rectangle
+    # Note - 1 in y-axis for a better alignment
     ct.color('#3C3B6E')
-    rectangle_filled(x, y, length / 2.5, height * 7 / 13)
+    rectangle_filled(x, y, length / 2.5, 7 * height / 13 - 1)
     # The white stars
     # TODO is it possible to simplify the 2 loops
     ct.color('white')
