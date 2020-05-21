@@ -151,9 +151,9 @@ def horizontal_strips(x, y, length, height, *colors):
 def rectangle_circle(rect_x, rect_y, length, height,
                      circ_center_x, circ_center_y, diameter,
                      rect_col, circ_col):
-    ct.color(rect_col, rect_col)
+    ct.color(rect_col)
     rectangle_filled(rect_x, rect_y, length, height)
-    ct.color(circ_col, circ_col)
+    ct.color(circ_col)
     circle_filled(circ_center_x, circ_center_y, diameter)
 
 
