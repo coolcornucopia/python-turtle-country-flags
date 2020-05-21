@@ -133,9 +133,6 @@ def rectangle_3_vertical_strips(x, y, length, height,
     rectangle_filled(x + l, y, l, height)
     ct.color(col3, col3)
     rectangle_filled(x + 2 * l, y, l, height)
-    # Surrounding border
-    ct.color(flag_border_col)
-    rectangle(x, y, length, height)
 
 def rectangle_3_horizontal_strips(x, y, length, height,
                                     col1, col2, col3):
@@ -146,9 +143,6 @@ def rectangle_3_horizontal_strips(x, y, length, height,
     rectangle_filled(x, y - h, length, h)
     ct.color(col3, col3)
     rectangle_filled(x, y - 2 * h, length, h)
-    # Surrounding border
-    ct.color(flag_border_col)
-    rectangle(x, y, length, height)
 
 def rectangle_circle(rect_x, rect_y, length, height,
                      circ_center_x, circ_center_y, diameter,
@@ -157,9 +151,6 @@ def rectangle_circle(rect_x, rect_y, length, height,
     rectangle_filled(rect_x, rect_y, length, height)
     ct.color(circ_col, circ_col)
     circle_filled(circ_center_x, circ_center_y, diameter)
-    # Surrounding border
-    ct.color(flag_border_col)
-    rectangle(rect_x, rect_y, length, height)
 
 
 ### Country flag drawing functions ###
@@ -347,14 +338,17 @@ def draw_all_flags(length, border, affiche_texte = False):
     y = y_start
     print(x,y, border_inside)
     for i in range(flags_num):
+        # Get the flag and draw it
         d = flags_list[i]
         d.draw(x, y, length)
+        # Draw the flag border
+        ct.color(flag_border_col) # TODO find a better way for color config
+        rectangle(x, y, length, length * d.ratio)
+        # Next flag
         x += length + border_inside
         if x > (window_width / 2) - border - length:
             x = x_start
             y -= length * 2/3 + border_inside
-
-
 
 
 ### MAIN STARTS HERE BELOW ###
