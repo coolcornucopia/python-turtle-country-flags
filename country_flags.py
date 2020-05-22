@@ -78,6 +78,7 @@ def cross(center_x, center_y, length):
     ct.right(90)
     ct.forward(length)
 
+
 # This five pointed star function draws a star "standing with arms open
 # horizontally" and a span of "length" and returns the coordinates and sizes
 # of the surrounding rectangle, it is then easier to align the star with
@@ -136,7 +137,6 @@ def vertical_strips(x, y, length, height, *colors):
         ct.color(colors[i])
         rectangle_filled(x + i * l, y, l, height)
 
-
 def horizontal_strips(x, y, length, height, *colors):
     nc = len(colors)
     if nc <= 0:
@@ -148,12 +148,16 @@ def horizontal_strips(x, y, length, height, *colors):
         ct.color(colors[i])
         rectangle_filled(x, y - i * h, length, h)
 
-def rectangle_circle(rect_x, rect_y, length, height,
-                     circ_center_x, circ_center_y, diameter,
-                     rect_col, circ_col):
-    ct.color(rect_col)
-    rectangle_filled(rect_x, rect_y, length, height)
+# TODO Document parameters
+def rectangle_circle(x, y, length, height,
+                     circ_center_x_r, circ_center_y_r,
+                     circ_diam_r, background_col, circ_col):
+    ct.color(background_col)
+    rectangle_filled(x, y, length, height)
     ct.color(circ_col)
+    circ_center_x = x + length * circ_center_x_r
+    circ_center_y = y - height * circ_center_y_r
+    diameter = length * circ_diam_r
     circle_filled(circ_center_x, circ_center_y, diameter)
 
 # TODO Document parameters
@@ -185,8 +189,7 @@ def flag_Austria(x, y, length, height):
     horizontal_strips(x, y, length, height, '#ED2939', 'white', '#ED2939')
 
 def flag_Bangladesh(x, y, length, height):
-    rectangle_circle(x, y, length, height,
-                     x + length * 450/1000, y - height / 2, 2 * length / 5,
+    rectangle_circle(x, y, length, height, 45/100, 1/2, 2/5,
                      '#006a4e', '#f42a41')
 
 def flag_Belgium(x, y, length, height):
@@ -263,8 +266,7 @@ def flag_United_States(x, y, length, height):
         star_y -= star_height
 
 def flag_Japan(x, y, length, height):
-    rectangle_circle(x, y, length, height,
-                     x + length / 2, y - height / 2, 2 * length / 5,
+    rectangle_circle(x, y, length, height, 1/2, 1/2, 2/5,
                      'white', '#bc002d')
 
 
