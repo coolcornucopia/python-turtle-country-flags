@@ -156,6 +156,18 @@ def rectangle_circle(rect_x, rect_y, length, height,
     ct.color(circ_col)
     circle_filled(circ_center_x, circ_center_y, diameter)
 
+# TODO Document parameters
+def cross_filled(x, y, length, height,
+                 cross_center_x_r, cross_center_y_r,
+                 cross_length_r, cross_height_r, col):
+    ct.color(col)
+    l = length * cross_length_r
+    h = height * cross_height_r
+    x1 = x + length * cross_center_x_r - (l / 2)
+    y1 = y - height * cross_center_y_r + (h / 2)
+    rectangle_filled(x1, y, l, height)
+    rectangle_filled(x, y1, length, h)
+
 
 ### Country flag drawing functions ###
 
@@ -213,6 +225,13 @@ def flag_France(x, y, length, height):
 
 def flag_Gabon(x, y, length, height):
     horizontal_strips(x, y, length, height, '#3a75c4', '#fcd116', '#009e60')
+
+def flag_Sweden(x, y, length, height):
+    ct.color("#006AA7")
+    rectangle_filled(x, y, length, height)
+    cross_filled(x, y, length, height, 6/16, 5/10,
+                 1/8, 1/5, '#FECC00')
+
 
 def flag_United_States(x, y, length, height):
     # Red & white strips
@@ -285,8 +304,9 @@ flags_list.append(Flag("Estonia", 7/11, flag_Estonia))
 flags_list.append(Flag("France", 2/3, flag_France))
 flags_list.append(Flag("Gabon", 3/4, flag_Gabon))
 
+flags_list.append(Flag("Sweden", 10/19, flag_Sweden))
 flags_list.append(Flag("United States", 10/19, flag_United_States))
-flag_test = flag_United_States
+flag_test = flag_Sweden
 
 flags_list.append(Flag("Japan", 2/3, flag_Japan))
 
