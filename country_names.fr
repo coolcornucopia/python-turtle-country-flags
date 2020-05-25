@@ -1,0 +1,250 @@
+# From https://fr.wikipedia.org/wiki/ISO_3166-1
+004;Afghanistan
+008;Albanie
+010;Antarctique
+012;Algérie
+016;Samoa américaines
+020;Andorre
+024;Angola
+028;Antigua-et-Barbuda
+031;Azerbaïdjan
+032;Argentine
+036;Australie
+040;Autriche
+044;Bahamas
+048;Bahreïn
+050;Bangladesh
+051;Arménie
+052;Barbade
+056;Belgique
+060;Bermudes
+064;Bhoutan
+068;Bolivie (État plurinational de)
+070;Bosnie-Herzégovine
+072;Botswana
+074;Bouvet (l'Île)
+076;Brésil
+084;Belize
+086;Indien (le Territoire britannique de l'océan)
+090;Salomon (les Îles)
+092;Vierges britanniques (les Îles)
+096;Brunéi Darussalam
+100;Bulgarie
+104;Myanmar
+108;Burundi
+112;Bélarus
+116;Cambodge
+120;Cameroun
+124;Canada
+132;Cabo Verde
+136;Caïmans (les Îles)
+140;République centrafricaine
+144;Sri Lanka
+148;Tchad
+152;Chili
+156;Chine
+158;Taïwan (Province de Chine)
+162;Christmas (l'Île)
+166;Cocos (les Îles)/ Keeling (les Îles)
+170;Colombie
+174;Comores
+175;Mayotte
+178;Congo
+180;Congo (la République démocratique du)
+184;Cook (les Îles)
+188;Costa Rica
+191;Croatie
+192;Cuba
+196;Chypre
+203;Tchéquie
+204;Bénin
+208;Danemark
+212;Dominique
+214;dominicaine (la République)
+218;Équateur
+222;El Salvador
+226;Guinée équatoriale
+231;Éthiopie
+232;Érythrée
+233;Estonie
+234;Féroé (les Îles)
+238;Falkland (les Îles)/Malouines (les Îles)
+239;Géorgie du Sud-et-les Îles Sandwich du Sud
+242;Fidji
+246;Finlande
+248;Åland(les Îles)
+250;France
+254;Guyane française (la )
+258;Polynésie française
+260;Terres australes françaises
+262;Djibouti
+266;Gabon
+268;Géorgie
+270;Gambie
+275;Palestine, État de
+276;Allemagne
+288;Ghana
+292;Gibraltar
+296;Kiribati
+300;Grèce
+304;Groenland
+308;Grenade
+312;Guadeloupe
+316;Guam
+320;Guatemala
+324;Guinée
+328;Guyana
+332;Haïti
+334;Heard-et-Îles MacDonald (l'Île)
+336;Saint-Siège
+340;Honduras
+344;Hong Kong
+348;Hongrie
+352;Islande
+356;Inde
+360;Indonésie
+364;Iran (République Islamique d')
+368;Iraq
+372;Irlande
+376;Israël
+380;Italie
+384;Côte d'Ivoire
+388;Jamaïque
+392;Japon
+398;Kazakhstan
+400;Jordanie
+404;Kenya
+408;Corée (la République populaire démocratique de)
+410;Corée (la République de)
+414;Koweït
+417;Kirghizistan
+418;Lao (la République démocratique populaire)
+422;Liban
+426;Lesotho
+428;Lettonie
+430;Libéria
+434;Libye
+438;Liechtenstein
+440;Lituanie
+442;Luxembourg
+446;Macao
+450;Madagascar
+454;Malawi
+458;Malaisie
+462;Maldives
+466;Mali
+470;Malte
+474;Martinique
+478;Mauritanie
+480;Maurice
+484;Mexique
+492;Monaco
+496;Mongolie
+498;Moldova (la République de)
+499;Monténégro
+500;Montserrat
+504;Maroc
+508;Mozambique
+512;Oman
+516;Namibie
+520;Nauru
+524;Népal
+528;Pays-Bas
+531;Curaçao
+533;Aruba
+534;Saint-Martin (partie néerlandaise)
+535;Bonaire, Saint-Eustache et Saba
+540;Nouvelle-Calédonie
+548;Vanuatu
+554;Nouvelle-Zélande
+558;Nicaragua
+562;Niger
+566;Nigéria
+570;Niue
+574;Norfolk (l'Île)
+578;Norvège
+580;Mariannes du Nord (les Îles)
+581;Îles mineures éloignées des États-Unis
+583;Micronésie (États fédérés de)
+584;Marshall (les Îles)
+585;Palaos
+586;Pakistan
+591;Panama
+598;Papouasie-Nouvelle-Guinée
+600;Paraguay
+604;Pérou
+608;Philippines
+612;Pitcairn
+616;Pologne
+620;Portugal
+624;Guinée-Bissau
+626;Timor-Leste
+630;Porto Rico
+634;Qatar
+638;Réunion
+642;Roumanie
+643;Russie (la Fédération de)
+646;Rwanda
+652;Saint-Barthélemy
+654;Sainte-Hélène, Ascension et Tristan da Cunha
+659;Saint-Kitts-et-Nevis
+660;Anguilla
+662;Sainte-Lucie
+663;Saint-Martin (partie française)
+666;Saint-Pierre-et-Miquelon
+670;Saint-Vincent-et-les Grenadines
+674;Saint-Marin
+678;Sao Tomé-et-Principe
+682;Arabie saoudite
+686;Sénégal
+688;Serbie
+690;Seychelles
+694;Sierra Leone
+702;Singapour
+703;Slovaquie
+704;Viet Nam
+705;Slovénie
+706;Somalie
+710;Afrique du Sud
+716;Zimbabwe
+724;Espagne
+728;Soudan du Sud
+729;Soudan
+732;Sahara occidental*
+740;Suriname
+744;Svalbard et l'Île Jan Mayen
+748;Eswatini
+752;Suède
+756;Suisse
+760;République arabe syrienne
+762;Tadjikistan
+764;Thaïlande
+768;Togo
+772;Tokelau
+776;Tonga
+780;Trinité-et-Tobago
+784;Émirats arabes unis
+788;Tunisie
+792;Turquie
+795;Turkménistan
+796;Turks-et-Caïcos (les Îles)
+798;Tuvalu
+800;Ouganda
+804;Ukraine
+807;Macédoine du Nord
+818;Égypte
+826;Royaume-Uni de Grande-Bretagne et d'Irlande du Nord
+831;Guernesey
+832;Jersey
+833;Île de Man
+834;Tanzanie (la République-Unie de)
+840;États-Unis d'Amérique
+850;Vierges des États-Unis (les Îles)
+854;Burkina Faso
+858;Uruguay
+860;Ouzbékistan
+862;Venezuela (République bolivarienne du)
+876;Wallis-et-Futuna
+882;Samoa
+887;Yémen
+894;Zambie
