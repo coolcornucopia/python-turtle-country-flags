@@ -59,27 +59,27 @@ def prepare_drawing(x, y):
     ct.setheading(0)
     ct.pendown()
 
-def rectangle(x, y, length, height):
+def rectangle(x, y, width, height):
     prepare_drawing(x, y)
     # Note: we may use a loop but it does not bring that much
-    ct.forward(length)
+    ct.forward(width)
     ct.right(90)
     ct.forward(height)
     ct.right(90)
-    ct.forward(length)
+    ct.forward(width)
     ct.right(90)
     ct.forward(height)
 
-def rectangle_filled(x, y, length, height):
+def rectangle_filled(x, y, width, height):
     ct.begin_fill()
-    rectangle(x, y, length, height)
+    rectangle(x, y, width, height)
     ct.end_fill()
 
-def square(x, y, length):
-    rectangle(x, y, length, length)
+def square(x, y, width):
+    rectangle(x, y, width, width)
 
-def square_filled(x, y, length):
-    rectangle_filled(x, y, length, length)
+def square_filled(x, y, width):
+    rectangle_filled(x, y, width, width)
 
 # For the circle, use the diameter instead of the radius because it is
 # then easier to make objects touch themselves, avoiding x2 in user code.
@@ -93,30 +93,30 @@ def circle_filled(center_x, center_y, diameter):
     circle(center_x, center_y, diameter)
     ct.end_fill()
 
-# The cross is inside a "length" diameter circle
-def cross(center_x, center_y, length):
+# The cross is inside a "width" diameter circle
+def cross(center_x, center_y, width):
     # Move on the cross left then draw
-    prepare_drawing(center_x - (length / 2), center_y)
-    ct.forward(length)
+    prepare_drawing(center_x - (width / 2), center_y)
+    ct.forward(width)
     # Move on the cross top then draw
-    prepare_drawing(center_x, center_y + (length / 2))
+    prepare_drawing(center_x, center_y + (width / 2))
     ct.right(90)
-    ct.forward(length)
+    ct.forward(width)
 
 
 # This five pointed star function draws a star "standing with arms open
-# horizontally" and a span of "length" and returns the coordinates and sizes
+# horizontally" and a span of "width" and returns the coordinates and sizes
 # of the surrounding rectangle, it is then easier to align the star with
 # other shapes. The drawing algorithm has been adapted from
 # https://stackoverflow.com/questions/26356543/turtle-graphics-draw-a-star
-def five_pointed_star(center_x, center_y, length):
+def five_pointed_star(center_x, center_y, width):
     # https://rechneronline.de/pi/pentagon.php
-    # d = length
+    # d = width
     # a = pentagon side = 0,618 * d
     # h = height = 0,951 * d
     # ri = radius of the inscribed circle = 0,425 * d
     # rc = radius of the circumscribed circle = 0,526 * d
-    d = length
+    d = width
     h = 0.951 * d
     rc = 0.526 * d
 
@@ -141,28 +141,28 @@ def five_pointed_star(center_x, center_y, length):
     return center_x - d / 2, center_y + rc, d, h
 
 # (read five_pointed_star() above function description for details)
-def five_pointed_star_filled(center_x, center_y, length):
+def five_pointed_star_filled(center_x, center_y, width):
     ct.begin_fill()
-    x, y, l, h = five_pointed_star(center_x, center_y, length)
+    x, y, w, h = five_pointed_star(center_x, center_y, width)
     ct.end_fill()
-    return x, y, l, h
+    return x, y, w, h
 
 
 ### HELPER FUNCTIONS FOR FLAGS DRAWING ###
 
 # TODO better document below functions
-def vertical_strips(x, y, length, height, *colors):
+def vertical_strips(x, y, width, height, *colors):
     nc = len(colors)
     if nc <= 0:
         # TODO Better manage error here below
         print(func_name + ": Bad color value")
         return
-    l = length / nc  # TODO round?
+    w = width / nc  # TODO round?
     for i in range(nc):
         ct.color(colors[i])
-        rectangle_filled(x + i * l, y, l, height)
+        rectangle_filled(x + i * w, y, w, height)
 
-def horizontal_strips(x, y, length, height, *colors):
+def horizontal_strips(x, y, width, height, *colors):
     nc = len(colors)
     if nc <= 0:
         # TODO Better manage error here below
@@ -171,31 +171,31 @@ def horizontal_strips(x, y, length, height, *colors):
     h = height / nc  # TODO round?
     for i in range(nc):
         ct.color(colors[i])
-        rectangle_filled(x, y - i * h, length, h)
+        rectangle_filled(x, y - i * h, width, h)
 
 # TODO Document parameters
-def rectangle_circle(x, y, length, height,
+def rectangle_circle(x, y, width, height,
                      circ_center_x_r, circ_center_y_r,
                      circ_diam_r, background_col, circ_col):
     ct.color(background_col)
-    rectangle_filled(x, y, length, height)
+    rectangle_filled(x, y, width, height)
     ct.color(circ_col)
-    circ_center_x = x + length * circ_center_x_r
+    circ_center_x = x + width * circ_center_x_r
     circ_center_y = y - height * circ_center_y_r
-    diameter = length * circ_diam_r
+    diameter = width * circ_diam_r
     circle_filled(circ_center_x, circ_center_y, diameter)
 
 # TODO Document parameters
-def cross_filled(x, y, length, height,
+def cross_filled(x, y, width, height,
                  cross_center_x_r, cross_center_y_r,
-                 cross_length_r, cross_height_r, col):
+                 cross_width_r, cross_height_r, col):
     ct.color(col)
-    l = length * cross_length_r
+    w = width * cross_width_r
     h = height * cross_height_r
-    x1 = x + length * cross_center_x_r - (l / 2)
+    x1 = x + width * cross_center_x_r - (w / 2)
     y1 = y - height * cross_center_y_r + (h / 2)
-    rectangle_filled(x1, y, l, height)
-    rectangle_filled(x, y1, length, h)
+    rectangle_filled(x1, y, w, height)
+    rectangle_filled(x, y1, width, h)
 
 
 ### COUNTRY FLAG DRAWING FUNCTIONS ###
@@ -204,78 +204,78 @@ def cross_filled(x, y, length, height,
 # aspect ratio and the border, so you can use them directly
 # depending of your need... or via the class with proper aspect ratio :-)
 # TODO re-order by country names
-def flag_Germany(x, y, length, height):
-    horizontal_strips(x, y, length, height, '#000', '#D00', '#FFCE00')
+def flag_Germany(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#000', '#D00', '#FFCE00')
 
-def flag_Armenia(x, y, length, height):
-    horizontal_strips(x, y, length, height, '#D90012', '#0033A0', '#F2A800')
+def flag_Armenia(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#D90012', '#0033A0', '#F2A800')
 
-def flag_Austria(x, y, length, height):
-    horizontal_strips(x, y, length, height, '#ED2939', 'white', '#ED2939')
+def flag_Austria(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#ED2939', 'white', '#ED2939')
 
-def flag_Bangladesh(x, y, length, height):
-    rectangle_circle(x, y, length, height, 45/100, 1/2, 2/5,
+def flag_Bangladesh(x, y, width, height):
+    rectangle_circle(x, y, width, height, 45/100, 1/2, 2/5,
                      '#006a4e', '#f42a41')
 
-def flag_Belgium(x, y, length, height):
-    vertical_strips(x, y, length, height, 'black', '#FAE042', '#ED2939')
+def flag_Belgium(x, y, width, height):
+    vertical_strips(x, y, width, height, 'black', '#FAE042', '#ED2939')
 
-def flag_Benin(x, y, length, height):
+def flag_Benin(x, y, width, height):
     h = height / 2
     ct.color('#FCD116')
-    rectangle_filled(x, y, length, h)
+    rectangle_filled(x, y, width, h)
     ct.color('#E8112D')
-    rectangle_filled(x, y - h, length, h)
+    rectangle_filled(x, y - h, width, h)
     ct.color('#008751')
-    rectangle_filled(x, y, length / 2.5, height)
+    rectangle_filled(x, y, width / 2.5, height)
 
-def flag_Myanmar(x, y, length, height):
-    horizontal_strips(x, y, length, height, '#FECB00', '#34B233', '#EA2839')
+def flag_Myanmar(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#FECB00', '#34B233', '#EA2839')
     ct.color('white')
     h = 2 * height / 3
     d = h / 0.951  # See five_pointed_star_filled() computations
-    five_pointed_star_filled(x + length / 2, y - height / 1.92, d)
+    five_pointed_star_filled(x + width / 2, y - height / 1.92, d)
 
-def flag_Bolivia(x, y, length, height):
-    vertical_strips(x, y, length, height, 'black', '#FAE042', '#ED2939')
+def flag_Bolivia(x, y, width, height):
+    vertical_strips(x, y, width, height, 'black', '#FAE042', '#ED2939')
 
-def flag_Bulgaria(x, y, length, height):
-    horizontal_strips(x, y, length, height, 'white', '#00966E', '#D62612')
+def flag_Bulgaria(x, y, width, height):
+    horizontal_strips(x, y, width, height, 'white', '#00966E', '#D62612')
 
-def flag_Ivory_Coast(x, y, length, height):
-    vertical_strips(x, y, length, height, '#f77f00', 'white', '#009e60')
+def flag_Ivory_Coast(x, y, width, height):
+    vertical_strips(x, y, width, height, '#f77f00', 'white', '#009e60')
 
-def flag_Estonia(x, y, length, height):
-    horizontal_strips(x, y, length, height, '#0072ce', 'black', 'white')
+def flag_Estonia(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#0072ce', 'black', 'white')
 
-def flag_France(x, y, length, height):
-    vertical_strips(x, y, length, height, '#002395', 'white', '#ED2939')
+def flag_France(x, y, width, height):
+    vertical_strips(x, y, width, height, '#002395', 'white', '#ED2939')
 
-def flag_Gabon(x, y, length, height):
-    horizontal_strips(x, y, length, height, '#3a75c4', '#fcd116', '#009e60')
+def flag_Gabon(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#3a75c4', '#fcd116', '#009e60')
 
-def flag_Sweden(x, y, length, height):
+def flag_Sweden(x, y, width, height):
     ct.color("#006AA7")
-    rectangle_filled(x, y, length, height)
-    cross_filled(x, y, length, height, 6/16, 5/10,
+    rectangle_filled(x, y, width, height)
+    cross_filled(x, y, width, height, 6/16, 5/10,
                  1/8, 1/5, '#FECC00')
 
 
-def flag_United_States(x, y, length, height):
+def flag_United_States(x, y, width, height):
     # Red & white strips
     r = '#B22234'
     w = 'white'
-    horizontal_strips(x, y, length, height, r, w, r, w, r, w, r, w, r, w,
+    horizontal_strips(x, y, width, height, r, w, r, w, r, w, r, w, r, w,
                       r, w, r)
     # The blue rectangle
     # Note - 1 in y-axis for a better alignment
     ct.color('#3C3B6E')
-    rectangle_filled(x, y, length / 2.5, 7 * height / 13 - 1)
+    rectangle_filled(x, y, width / 2.5, 7 * height / 13 - 1)
     # The white stars
     ct.color('white')
     #ct.color('#717095', 'white') # false antialiasing if big flag
-    star_width = length / 30
-    star_height = length / 28
+    star_width = width / 30
+    star_height = width / 28
     star_y = y - star_height
     stars_in_row = 5
     for yy in range(9):
@@ -290,8 +290,8 @@ def flag_United_States(x, y, length, height):
             star_x += 2 * star_width
         star_y -= star_height
 
-def flag_Japan(x, y, length, height):
-    rectangle_circle(x, y, length, height, 1/2, 1/2, 2/5,
+def flag_Japan(x, y, width, height):
+    rectangle_circle(x, y, width, height, 1/2, 1/2, 2/5,
                      'white', '#bc002d')
 
 
@@ -308,9 +308,9 @@ class Flag:
             self.ratio = self.ratio_default
         self.drawing_func = drawing_func
 
-    def draw(self, x, y, length):
-        self.drawing_func(x, y, length,
-                                length * self.ratio)
+    def draw(self, x, y, width):
+        self.drawing_func(x, y, width,
+                                width * self.ratio)
 
 
 # List of all the flags
@@ -348,7 +348,7 @@ def strip_accents(s):
 flags_list.sort(key=lambda x: strip_accents(x.country))
 
 
-def draw_all_flags(length, border, affiche_texte = False):
+def draw_all_flags(width, border, affiche_texte = False):
     # on récupère la taille de la fenètre
     window_width = screen.window_width()
     window_height = screen.window_height()
@@ -357,14 +357,14 @@ def draw_all_flags(length, border, affiche_texte = False):
     flags_num = len(flags_list)
     x_start = -(window_width / 2) + border # TODO rename border please
     y_start = (window_height / 2) - border
-    flags_horiz_max = int((window_width - 2 * border) / length)
+    flags_horiz_max = int((window_width - 2 * border) / width)
     print(flags_horiz_max)
     # TODO rename border_inside
-    border_inside = (window_width - (2 * border)) - (flags_horiz_max * length)
+    border_inside = (window_width - (2 * border)) - (flags_horiz_max * width)
     border_inside /= (flags_horiz_max - 1)
     if border_inside < 5:
         flags_horiz_max -= 1
-        border_inside = (window_width - (2 * border)) - (flags_horiz_max * length)
+        border_inside = (window_width - (2 * border)) - (flags_horiz_max * width)
         border_inside /= (flags_horiz_max - 1)
     x = x_start
     y = y_start
@@ -372,15 +372,15 @@ def draw_all_flags(length, border, affiche_texte = False):
     for i in range(flags_num):
         # Get the flag and draw it
         d = flags_list[i]
-        d.draw(x, y, length)
+        d.draw(x, y, width)
         # Draw the flag border
         ct.color(flag_border_col) # TODO find a better way for color config
-        rectangle(x, y, length, length * d.ratio)
+        rectangle(x, y, width, width * d.ratio)
         # Next flag
-        x += length + border_inside
-        if x > (window_width / 2) - border - length:
+        x += width + border_inside
+        if x > (window_width / 2) - border - width:
             x = x_start
-            y -= length * 2/3 + border_inside
+            y -= width * 2/3 + border_inside
 
 
 ### EVENTS MANAGEMENT ###
