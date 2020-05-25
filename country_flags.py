@@ -26,6 +26,8 @@ KEY_EXIT = "Escape"
 MOUSE_BUTTON_EXIT = 2   # mouse buttons: 1 left, 2 center, 3 right
 MOUSE_BUTTON_NORMAL = 1
 
+COUNTRY_NAMES_FILENAME = "country_names"
+
 fast_draw = True
 
 flag_border_col = 'black'
@@ -44,6 +46,8 @@ screen = Screen()
 
 my_screenclicked = False
 my_keypressed = False
+
+country_names = {}  # Content depends on the language
 
 
 ### DRAWING PRIMITIVES ###
@@ -387,6 +391,16 @@ def draw_all_flags(width, border, affiche_texte = False):
             x = x_start
             y -= width * 2/3 + border_inside
 
+def load_country_names(language):
+    filename = COUNTRY_NAMES_FILENAME + '.' + language
+    with open(filename) as fh:
+        for line in fh:
+            if line.startswith("#"): # Ignore commented lines
+                continue
+            code, country_name = line.rstrip().split(";")
+            country_names[int(code)] = country_name
+    #print(country_names)
+
 
 ### EVENTS MANAGEMENT ###
 
@@ -485,10 +499,13 @@ def main():
 
     install_event_management()
 
+    load_country_names("en")
+
     if debug:
         print("Country list in alphabetical order:")
         for d in flags_list:
-            print("{:03d}".format(d.country_code))
+            print("{:03d}".format(d.country_code),
+                  country_names[d.country_code])
 
         print("There are already " + str(len(flags_list)) +
               " flags, great job!")
