@@ -19,21 +19,31 @@ from turtle import Turtle, Screen, mainloop
 import unicodedata # Use to sort strings with accents, see strip_accents()
 import time
 
+
+### CONFIGURATION ###
+
+KEY_EXIT = "Escape"
+MOUSE_BUTTON_EXIT = 2   # mouse buttons: 1 left, 2 center, 3 right
+MOUSE_BUTTON_NORMAL = 1
+
+fast_draw = True
+
+flag_border_col = 'black'
+
+debug = False
+#debug = True
+
+
+### GLOBAL VARIABLES ###
+
 # This is our "current turtle (ct)"
 ct = Turtle()
 
 # TODO (resolution, default white background)
 screen = Screen()
 
-debug = False
-#debug = True
-
 my_screenclicked = False
 my_keypressed = False
-
-fast_draw = True
-
-flag_border_col = 'black'
 
 
 ### DRAWING PRIMITIVES ###
@@ -375,10 +385,17 @@ def draw_all_flags(length, border, affiche_texte = False):
 
 ### EVENTS MANAGEMENT ###
 
+def my_exit():
+    print("Bye")
+    screen.bye()
+
+def my_exit_mouse(x, y):
+    my_exit()
+
 def my_onscreenclick(x, y):
     global my_screenclicked
     my_screenclicked = True
-    #print("my_screenclicked =", my_screenclicked)
+    #print("my_screenclicked =", my_screenclicked, x, y)
 
 def my_onkeypress():
     global my_keypressed
@@ -397,17 +414,16 @@ def wait_click_or_key():
 
 def install_event_management():
     # Install event capture
-    screen.onscreenclick(my_onscreenclick)
+    screen.onscreenclick(my_exit_mouse, btn = MOUSE_BUTTON_EXIT)
+    screen.onkey(my_exit, KEY_EXIT)
+
+    screen.onscreenclick(my_onscreenclick, btn = MOUSE_BUTTON_NORMAL)
     screen.onkeypress(my_onkeypress)
     my_screenclicked = False
     my_keypressed = False
+
+    screen.listen()
     frame()
-
-
-def uninstall_event_manager():
-    # Remove events
-    screen.onscreenclick(None)
-    screen.onkeypress(None)
 
 
 ### SCREEN UPDATE HELPERS ###
@@ -463,9 +479,6 @@ def main():
     update_configure(True)
 
     install_event_management()
-
-    screen.onkey(screen.bye, "Escape") # TODO please document
-    screen.listen()
 
     if debug:
         print("Country list in alphabetical order:")
