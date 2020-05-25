@@ -15,8 +15,9 @@ https://github.com/coolcornucopia/
 #   https://en.wikipedia.org/wiki/List_of_aspect_ratios_of_national_flags
 #   https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 
-from turtle import Turtle, Screen
+from turtle import Turtle, Screen, mainloop
 import unicodedata # Use to sort strings with accents, see strip_accents()
+import time
 
 # This is our "current turtle (ct)"
 ct = Turtle()
@@ -24,7 +25,15 @@ ct = Turtle()
 # TODO (resolution, default white background)
 screen = Screen()
 
+debug = False
+#debug = True
 
+my_screenclicked = False
+my_keypressed = False
+
+fast_draw = True
+
+flag_border_col = 'black'
 
 ### Drawing primitives ###
 
@@ -313,7 +322,6 @@ flags_list.append(Flag("Gabon", 3/4, flag_Gabon))
 
 flags_list.append(Flag("Sweden", 10/19, flag_Sweden))
 flags_list.append(Flag("United States", 10/19, flag_United_States))
-flag_test = flag_Sweden
 
 flags_list.append(Flag("Japan", 2/3, flag_Japan))
 
@@ -366,27 +374,66 @@ def draw_all_flags(length, border, affiche_texte = False):
 
 ### MAIN STARTS HERE BELOW ###
 
-debug = False
-#debug = True
+def my_onscreenclick(x, y):
+    global my_screenclicked
+    my_screenclicked = True
+    #print("my_screenclicked =", my_screenclicked)
 
-fast_draw = True
-#fast_draw = False
-if fast_draw:
-    # Set speed to max   # TODO useful as we use tracer(0)?
-    ct.speed(0)
-    # Hide the turtle
-    ct.hideturtle()
-    # We will manage when needed the scren update with screen.update()
-    screen.tracer(False)
+def my_onkeypress():
+    global my_keypressed
+    my_keypressed = True
+    #print("my_keypressed =", my_keypressed)
 
-# Black border, red inside
-ct.color('black', 'red')
+def frame():
+    print("frame...")
+    #screen.update()
+    screen.ontimer(frame, 1000) # TODO hard coded value
 
-# Pen thickness
-ct.pensize(1)
+def wait_click_or_key():
+    while not my_screenclicked and not my_keypressed:
+        screen.update()
+        time.sleep(0.5)
 
-# Drawing primitives test (set debug = True above)
-if debug:
+def install_event_management():
+    # Install event capture
+    screen.onscreenclick(my_onscreenclick)
+    screen.onkeypress(my_onkeypress)
+    my_screenclicked = False
+    my_keypressed = False
+    frame()
+
+
+def uninstall_event_manager():
+    # Remove events
+    screen.onscreenclick(None)
+    screen.onkeypress(None)
+
+
+### SCREEN UPDATE HELPERS ###
+
+# TODO rename me + test all parameters
+def update_configure(fast = True, speed = 2):
+    fast_draw = fast
+    if fast_draw:
+        # Set speed to max   # TODO useful as we use tracer(0)?
+        ct.speed(0)
+        # Hide the turtle
+        ct.hideturtle()
+        # We will manage when needed the scren update with screen.update()
+        screen.tracer(False)
+    else:
+        ct.speed(speed)
+        ct.showturtle() # TODO not useful
+        screen.tracer(True) # TODO not useful
+
+def update_do():
+    if fast_draw:
+        screen.update()
+
+
+### TEST HELPERS ###
+
+def test_primitives():
     ct.color('black', 'red')
     ct.pensize(1)
     cross(0, 0, 40)
@@ -394,48 +441,47 @@ if debug:
     circle_filled(40, 0, 40)
     square(60, 20, 40)
     square_filled(100, 20, 40)
-    if fast_draw:
-        screen.update()
-    k = input("Press ENTER to continue")
     rectangle(-20, -20, 80, 40)
-    if fast_draw:
-        screen.update()
-    k = input("Press ENTER to continue")
-
     rectangle_filled(60, -20, 80, 40)
-    #ct.color("black")
-    if fast_draw:
-        screen.update()
-    k = input("Press ENTER to continue")
-
     x, y, w, h = five_pointed_star(0, -80, 40)
     rectangle(x, y, w, h) # Rectangle containing the star
-
     five_pointed_star_filled(40, -80, 40)
-    if fast_draw:
-        screen.update()
-    k = input("Press ENTER to continue")
-    ct.clear()
+
+def test_flag(flag_function_name):
+    flag_function_name(-300, 200, 400, 400*2/3)
 
 
-flag_border_col = 'black'
+### MAIN ###
 
-#flag_armenie(0, 0, 100, 100)
-flag_test(-300, 200, 400, 400*2/3)
-if fast_draw:
-    screen.update()
-k = input("Press ENTER to continue")
-ct.clear()
+def main():
+    # Black border, red inside
+    ct.color('black', 'red')
+    # Pen thickness
+    ct.pensize(1)
 
-if debug:
-    print("Country list in alphabetical order:")
-    for d in flags_list:
-        print(d.country)
+    update_configure(True)
 
-print("There are already " + str(len(flags_list)) +
-      " flags, great job!")
+    install_event_management()
 
-draw_all_flags(100, 20)
+    screen.onkey(screen.bye, "Escape") # TODO please document
+    screen.listen()
 
-if fast_draw:
-    screen.update()
+    if debug:
+        print("Country list in alphabetical order:")
+        for d in flags_list:
+            print(d.country)
+
+        print("There are already " + str(len(flags_list)) +
+              " flags, great job!")
+
+    #test_primitives()
+    #test_flag(flag_Armenia)
+    draw_all_flags(100, 20)
+    update_do()
+    return "Ready"
+
+if __name__ == "__main__":
+    msg = main()
+    print(msg)
+    mainloop()
+
