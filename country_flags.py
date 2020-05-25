@@ -35,7 +35,8 @@ fast_draw = True
 
 flag_border_col = 'black'
 
-### Drawing primitives ###
+
+### DRAWING PRIMITIVES ###
 
 # Useful fonction to move the pen and reset the turtle orientation
 def prepare_drawing(x, y):
@@ -137,7 +138,7 @@ def five_pointed_star_filled(center_x, center_y, length):
     return x, y, l, h
 
 
-### Helper functions for drawing flags ###
+### HELPER FUNCTIONS FOR FLAGS DRAWING ###
 
 # TODO better document below functions
 def vertical_strips(x, y, length, height, *colors):
@@ -187,7 +188,7 @@ def cross_filled(x, y, length, height,
     rectangle_filled(x, y1, length, h)
 
 
-### Country flag drawing functions ###
+### COUNTRY FLAG DRAWING FUNCTIONS ###
 
 # Note Following functions do not take into account directly the
 # aspect ratio and the border, so you can use them directly
@@ -372,7 +373,7 @@ def draw_all_flags(length, border, affiche_texte = False):
             y -= length * 2/3 + border_inside
 
 
-### MAIN STARTS HERE BELOW ###
+### EVENTS MANAGEMENT ###
 
 def my_onscreenclick(x, y):
     global my_screenclicked
