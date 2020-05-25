@@ -300,8 +300,8 @@ def flag_Japan(x, y, width, height):
 class Flag:
     ratio_variable = False  # TODO find a better way
     ratio_default = 2/3
-    def __init__(self, country, ratio, drawing_func):
-        self.country = country # TODO better manage country names (language)
+    def __init__(self, country_code, ratio, drawing_func):
+        self.country_code = country_code
         if self.ratio_variable:
             self.ratio = ratio
         else:
@@ -316,25 +316,25 @@ class Flag:
 # List of all the flags
 # TODO re-order by country names
 flags_list = list()
-flags_list.append(Flag("Germany", 3/5, flag_Germany))
-flags_list.append(Flag("Armenia", 1/2, flag_Armenia))
-flags_list.append(Flag("Austria", 2/3, flag_Austria))
-flags_list.append(Flag("Bangladesh", 3/5, flag_Bangladesh))
-flags_list.append(Flag("Belgium", 13/15, flag_Belgium))
-flags_list.append(Flag("Benin", 2/3, flag_Benin))
-flags_list.append(Flag("Myanmar", 3/3, flag_Myanmar))
+flags_list.append(Flag(276,  3/5 , flag_Germany))
+flags_list.append(Flag( 51,  1/2 , flag_Armenia))
+flags_list.append(Flag( 40,  2/3 , flag_Austria))
+flags_list.append(Flag( 50,  3/5 , flag_Bangladesh))
+flags_list.append(Flag( 56, 13/15, flag_Belgium))
+flags_list.append(Flag(204,  2/3 , flag_Benin))
+flags_list.append(Flag(104,  3/3 , flag_Myanmar))
 
-flags_list.append(Flag("Bolivia", 15/22, flag_Bolivia))
-flags_list.append(Flag("Bulgaria", 3/5, flag_Bulgaria))
-flags_list.append(Flag("Ivory Coast", 2/3, flag_Ivory_Coast))
-flags_list.append(Flag("Estonia", 7/11, flag_Estonia))
-flags_list.append(Flag("France", 2/3, flag_France))
-flags_list.append(Flag("Gabon", 3/4, flag_Gabon))
+flags_list.append(Flag( 68, 15/22, flag_Bolivia))
+flags_list.append(Flag(100,  3/5 , flag_Bulgaria))
+flags_list.append(Flag(384,  2/3 , flag_Ivory_Coast))
+flags_list.append(Flag(233,  7/11, flag_Estonia))
+flags_list.append(Flag(250,  2/3 , flag_France))
+flags_list.append(Flag(266,  3/4 , flag_Gabon))
 
-flags_list.append(Flag("Sweden", 10/19, flag_Sweden))
-flags_list.append(Flag("United States", 10/19, flag_United_States))
+flags_list.append(Flag(752, 10/19, flag_Sweden))
+flags_list.append(Flag(840, 10/19, flag_United_States))
 
-flags_list.append(Flag("Japan", 2/3, flag_Japan))
+flags_list.append(Flag(392,  2/3 , flag_Japan))
 
 
 # Function to remove accents, useful for sorting, else "États-Unis" (fr)
@@ -344,8 +344,13 @@ def strip_accents(s):
    return ''.join(c for c in unicodedata.normalize('NFD', s)
                   if unicodedata.category(c) != 'Mn')
 
+
+# TODO improve sorting (by name vs by country code)
 # Flag list alphabetical sort thanks to a lambda function
-flags_list.sort(key=lambda x: strip_accents(x.country))
+#flags_list.sort(key=lambda x: strip_accents(x.country))
+
+# Flag list sort thanks to a lambda function
+flags_list.sort(key=lambda x: x.country_code)
 
 
 def draw_all_flags(width, border, affiche_texte = False):
@@ -483,7 +488,7 @@ def main():
     if debug:
         print("Country list in alphabetical order:")
         for d in flags_list:
-            print(d.country)
+            print("{:03d}".format(d.country_code))
 
         print("There are already " + str(len(flags_list)) +
               " flags, great job!")
