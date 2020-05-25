@@ -1,7 +1,12 @@
-#
-# Draw country flags with the Python Turtle. Have fun!
-#
-# Peace, coolcornucopia.
+#!/usr/bin/env python3
+"""
+Draw country flags with the Python Turtle.
+
+Have fun!
+
+Peace, coolcornucopia.
+https://github.com/coolcornucopia/
+"""
 #
 # Python ressources:
 #   https://docs.python.org/3/library/turtle.html
