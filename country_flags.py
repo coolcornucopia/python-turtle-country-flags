@@ -27,6 +27,7 @@ MOUSE_BUTTON_EXIT = 2   # mouse buttons: 1 left, 2 center, 3 right
 MOUSE_BUTTON_NORMAL = 1
 
 COUNTRY_NAMES_FILENAME = "country_names"
+DEFAULT_LANGUAGE = "en"
 
 fast_draw = True
 
@@ -393,13 +394,23 @@ def draw_all_flags(width, border, affiche_texte = False):
 
 def load_country_names(language):
     filename = COUNTRY_NAMES_FILENAME + '.' + language
-    with open(filename) as fh:
-        for line in fh:
-            if line.startswith("#"): # Ignore commented lines
-                continue
-            code, country_name = line.rstrip().split(";")
-            country_names[int(code)] = country_name
+    try:
+        with open(filename) as fh:
+            for line in fh:
+                if line.startswith("#"): # Ignore commented lines
+                    continue
+                code, country_name = line.rstrip().split(";")
+                country_names[int(code)] = country_name
+
+    except FileNotFoundError as fnf_error:
+        print(fnf_error)
+        return False
+    except AssertionError as error:
+        print(error)
+        return False
+
     #print(country_names)
+    return True
 
 
 ### EVENTS MANAGEMENT ###
@@ -499,7 +510,12 @@ def main():
 
     install_event_management()
 
-    load_country_names("en")
+    language = "en"
+    if not load_country_names(language):
+        if not load_country_names(DEFAULT_LANGUAGE):
+            print("No country name files found!")
+        else:
+            print("Use default \"" + DEFAULT_LANGUAGE + "\" language")
 
     if debug:
         print("Country list in alphabetical order:")
