@@ -8,3 +8,5 @@
 * Add a function for rectangle_filled with color
 * "debug" as command line parameter (default False)
 * "turtle_animation_speed" or something else as as command line parameter
+* Analyze & improve pylint results with reg expressions (for less than 3
+  chars variable names and for function names like flag_Germany)
