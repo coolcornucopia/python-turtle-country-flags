@@ -16,6 +16,7 @@ https://github.com/coolcornucopia/
 #   https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 
 from turtle import Turtle, Screen, mainloop
+import locale
 import unicodedata # Use to sort strings with accents, see strip_accents()
 import time
 
@@ -519,7 +520,16 @@ def main():
 
     install_event_management()
 
-    language = "en"
+    # Load country names according to the language
+    # Note: below commented lines are for debugging languages
+    #locale.setlocale(locale.LC_ALL, "en_US.utf8")
+    #locale.setlocale(locale.LC_ALL, "fr_FR.utf8")
+    #locale.setlocale(locale.LC_ALL, "it_IT.utf8")
+    #locale.setlocale(locale.LC_ALL, "de_DE.utf8")
+    loc = locale.getlocale()
+    language = loc[0].split("_", 1)[0]  # convert "en_US" to "en"
+    #print(loc[0], language)
+
     if not load_country_names(language):
         if not load_country_names(DEFAULT_LANGUAGE):
             print("No country name files found!")
