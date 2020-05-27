@@ -32,10 +32,10 @@ DEFAULT_LANGUAGE = "en"
 
 fast_draw = True
 
-flag_border_col = 'black'
+FLAG_BORDER_COL = 'black'
 
-debug = False
-#debug = True
+DEBUG = False
+#DEBUG = True
 
 
 ### GLOBAL VARIABLES ###
@@ -132,7 +132,7 @@ def five_pointed_star(center_x, center_y, width):
     branch = d / 2.6
     prepare_drawing(center_x + d / 2 - branch, center_y + d / 6)
 
-    for i in range(5):
+    for _ in range(5):
         ct.forward(branch)
         ct.right(angle)
         ct.forward(branch)
@@ -284,14 +284,14 @@ def flag_United_States(x, y, width, height):
     star_height = width / 28
     star_y = y - star_height
     stars_in_row = 5
-    for yy in range(9):
-        if stars_in_row == 6:  # switch between 5 & 6 row stars
+    for _ in range(9):                 # vertical loop
+        if stars_in_row == 6:          # switch between 5 & 6 row stars
             stars_in_row = 5
             star_x = x + (2 * star_width)
         else:
             stars_in_row = 6
             star_x = x + star_width
-        for xx in range(stars_in_row):
+        for _ in range(stars_in_row):  # horizontal loop
             five_pointed_star_filled(star_x, star_y, star_width)
             star_x += 2 * star_width
         star_y -= star_height
@@ -303,7 +303,7 @@ def flag_Japan(x, y, width, height):
 
 ### FLAGS MANAGEMENT FUNCTIONS ###
 
-class Flag:
+class Flag(object):
     ratio_variable = False  # TODO find a better way
     ratio_default = 2/3
     def __init__(self, country_code, ratio, drawing_func):
@@ -316,7 +316,7 @@ class Flag:
 
     def draw(self, x, y, width):
         self.drawing_func(x, y, width,
-                                width * self.ratio)
+                          width * self.ratio)
 
 
 # List of all the flags
@@ -347,8 +347,8 @@ flags_list.append(Flag(392,  2/3 , flag_Japan))
 # will be the last of the sorting list in French
 # https://stackoverflow.com/questions/517923/what-is-the-best-way-to-remove-accents-in-a-python-unicode-string/518232#518232
 def strip_accents(s):
-   return ''.join(c for c in unicodedata.normalize('NFD', s)
-                  if unicodedata.category(c) != 'Mn')
+    return ''.join(c for c in unicodedata.normalize('NFD', s)
+                   if unicodedata.category(c) != 'Mn')
 
 
 # TODO improve sorting (by name vs by country code)
@@ -359,8 +359,9 @@ def strip_accents(s):
 flags_list.sort(key=lambda x: x.country_code)
 
 
-def draw_all_flags(width, border, affiche_texte = False):
-    # on récupère la taille de la fenètre
+def draw_all_flags(width, border, affiche_texte=False):
+    global flags_list
+    # Get window size
     window_width = screen.window_width()
     window_height = screen.window_height()
     #setup(window_width * 1.0, window_height * 1.0)
@@ -379,13 +380,13 @@ def draw_all_flags(width, border, affiche_texte = False):
         border_inside /= (flags_horiz_max - 1)
     x = x_start
     y = y_start
-    print(x,y, border_inside)
+    print(x, y, border_inside)
     for i in range(flags_num):
         # Get the flag and draw it
         d = flags_list[i]
         d.draw(x, y, width)
         # Draw the flag border
-        ct.color(flag_border_col) # TODO find a better way for color config
+        ct.color(FLAG_BORDER_COL) # TODO find a better way for color config
         rectangle(x, y, width, width * d.ratio)
         # Next flag
         x += width + border_inside
@@ -396,14 +397,17 @@ def draw_all_flags(width, border, affiche_texte = False):
 # Helper function to avoid to test everytime if the country_names
 # dictionnary is empty or a country code is missing
 def get_country_name(code):
+    global country_names
+    name = ""
     if code in country_names:
-        return country_names[code]
-    else:
-        return ""
+        name = country_names[code]
+
+    return name
 
 def load_country_names(language):
-    filename = COUNTRY_NAMES_FILENAME + '.' + language
+    global country_names
     country_names.clear()
+    filename = COUNTRY_NAMES_FILENAME + '.' + language
     try:
         with open(filename) as fh:
             for line in fh:
@@ -430,9 +434,11 @@ def my_exit():
     screen.bye()
 
 def my_exit_mouse(x, y):
+    #pylint: disable=unused-argument
     my_exit()
 
 def my_onscreenclick(x, y):
+    #pylint: disable=unused-argument
     global my_screenclicked
     my_screenclicked = True
     #print("my_screenclicked =", my_screenclicked, x, y)
@@ -454,11 +460,13 @@ def wait_click_or_key():
 
 def install_event_management():
     # Install event capture
-    screen.onscreenclick(my_exit_mouse, btn = MOUSE_BUTTON_EXIT)
+    screen.onscreenclick(my_exit_mouse, btn=MOUSE_BUTTON_EXIT)
     screen.onkey(my_exit, KEY_EXIT)
 
-    screen.onscreenclick(my_onscreenclick, btn = MOUSE_BUTTON_NORMAL)
+    screen.onscreenclick(my_onscreenclick, btn=MOUSE_BUTTON_NORMAL)
     screen.onkeypress(my_onkeypress)
+    global my_screenclicked
+    global my_keypressed
     my_screenclicked = False
     my_keypressed = False
 
@@ -469,7 +477,8 @@ def install_event_management():
 ### SCREEN UPDATE HELPERS ###
 
 # TODO rename me + test all parameters
-def update_configure(fast = True, speed = 2):
+def update_configure(fast=True, speed=2):
+    global fast_draw
     fast_draw = fast
     if fast_draw:
         # Set speed to max   # TODO useful as we use tracer(0)?
@@ -484,6 +493,7 @@ def update_configure(fast = True, speed = 2):
         screen.tracer(True) # TODO not useful
 
 def update_do():
+    global fast_draw
     if fast_draw:
         screen.update()
 
@@ -536,7 +546,7 @@ def main():
         else:
             print("Use default \"" + DEFAULT_LANGUAGE + "\" language")
 
-    if debug:
+    if DEBUG:
         print("Country list in alphabetical order:")
         for d in flags_list:
             print("{:03d}".format(d.country_code),
@@ -555,4 +565,3 @@ if __name__ == "__main__":
     msg = main()
     print(msg)
     mainloop()
-
