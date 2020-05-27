@@ -10,3 +10,10 @@
 * "turtle_animation_speed" or something else as as command line parameter
 * Analyze & improve pylint results with reg expressions (for less than 3
   chars variable names and for function names like flag_Germany)
+* Use stamps for stars on United States flag for faster drawing.
+* flag_text: add border and draw fullscreen for better details.
+* 3 modes:
+  1) several "pages" with all flags
+  2) small flag top & bottom horizontal scrolling with big flags in the center
+  3) game mode: guess the flag, guess the country, easy/medium/hard
+                max score online?
