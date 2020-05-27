@@ -1,0 +1,6 @@
+[VARIABLES]
+additional-builtins=func_name,FileNotFoundError
+
+[BASIC]
+good-names=i,j,k,x,y,w,h,d,rc,nc,ct,r,s,msg,x1,y1
+
