@@ -392,6 +392,14 @@ def draw_all_flags(width, border, affiche_texte = False):
             x = x_start
             y -= width * 2/3 + border_inside
 
+# Helper function to avoid to test everytime if the country_names
+# dictionnary is empty or a country code is missing
+def get_country_name(code):
+    if code in country_names:
+        return country_names[code]
+    else:
+        return ""
+
 def load_country_names(language):
     filename = COUNTRY_NAMES_FILENAME + '.' + language
     try:
@@ -521,7 +529,7 @@ def main():
         print("Country list in alphabetical order:")
         for d in flags_list:
             print("{:03d}".format(d.country_code),
-                  country_names[d.country_code])
+                  get_country_name(d.country_code))
 
         print("There are already " + str(len(flags_list)) +
               " flags, great job!")
