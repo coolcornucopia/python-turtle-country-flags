@@ -402,6 +402,7 @@ def get_country_name(code):
 
 def load_country_names(language):
     filename = COUNTRY_NAMES_FILENAME + '.' + language
+    country_names.clear()
     try:
         with open(filename) as fh:
             for line in fh:
