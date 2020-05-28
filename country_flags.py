@@ -235,13 +235,8 @@ def flag_Belgium(x, y, width, height):
     vertical_strips(x, y, width, height, 'black', '#FAE042', '#ED2939')
 
 def flag_Benin(x, y, width, height):
-    h = height / 2
-    ct.color('#FCD116')
-    rectangle_filled(x, y, width, h)
-    ct.color('#E8112D')
-    rectangle_filled(x, y - h, width, h)
-    ct.color('#008751')
-    rectangle_filled(x, y, width / 2.5, height)
+    vertical_strips(x, y, width, height, '#FCD116', '#E8112D')
+    rectangle_filled_color(x, y, width / 2.5, height, '#008751')
 
 def flag_Myanmar(x, y, width, height):
     horizontal_strips(x, y, width, height, '#FECB00', '#34B233', '#EA2839')
@@ -269,8 +264,7 @@ def flag_Gabon(x, y, width, height):
     horizontal_strips(x, y, width, height, '#3a75c4', '#fcd116', '#009e60')
 
 def flag_Sweden(x, y, width, height):
-    ct.color("#006AA7")
-    rectangle_filled(x, y, width, height)
+    rectangle_filled_color(x, y, width, height, '#006AA7')
     cross_filled(x, y, width, height, 6/16, 5/10,
                  1/8, 1/5, '#FECC00')
 
@@ -283,8 +277,7 @@ def flag_United_States(x, y, width, height):
                       r, w, r)
     # The blue rectangle
     # Note - 1 in y-axis for a better alignment
-    ct.color('#3C3B6E')
-    rectangle_filled(x, y, width / 2.5, 7 * height / 13 - 1)
+    rectangle_filled_color(x, y, width / 2.5, 7 * height / 13 - 1, '#3C3B6E')
     # The white stars
     ct.color('white')
     #ct.color('#717095', 'white') # false antialiasing if big flag
