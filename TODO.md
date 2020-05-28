@@ -17,3 +17,5 @@
   2) small flag top & bottom horizontal scrolling with big flags in the center
   3) game mode: guess the flag, guess the country, easy/medium/hard
                 max score online?
+* Fix rotation parameter (clockwise or counter clockwise?)
+* Add rotation to drawing primitives?
