@@ -55,14 +55,15 @@ country_names = {}  # Content depends on the language
 ### DRAWING PRIMITIVES ###
 
 # Useful fonction to move the pen and reset the turtle orientation
-def prepare_drawing(x, y):
+def prepare_drawing(x, y, rotation=0):
     ct.penup()
     ct.goto(x, y)
     # The orientation is set by default to the right.
     # In standard mode: 0=east 90=north 180=west 270=south
     # In logo mode: 0=north 90=east 180=south 270=west
     # Here we are in the standard mode
-    ct.setheading(0)
+    # rotation parameter is then counter-clockwise
+    ct.setheading(rotation)
     ct.pendown()
 
 def rectangle(x, y, width, height):
@@ -115,7 +116,8 @@ def cross(center_x, center_y, width):
 # of the surrounding rectangle, it is then easier to align the star with
 # other shapes. The drawing algorithm has been adapted from
 # https://stackoverflow.com/questions/26356543/turtle-graphics-draw-a-star
-def five_pointed_star(center_x, center_y, width):
+# TODO better document rotation (clockwise here)
+def five_pointed_star(center_x, center_y, width, rotation=0):
     # https://rechneronline.de/pi/pentagon.php
     # d = width
     # a = pentagon side = 0,618 * d
@@ -130,7 +132,7 @@ def five_pointed_star(center_x, center_y, width):
     # values for a more or less pointed star...
     angle = 144
     branch = d / 2.6
-    prepare_drawing(center_x + d / 2 - branch, center_y + d / 6)
+    prepare_drawing(center_x + d / 2 - branch, center_y + d / 6, rotation)
 
     for _ in range(5):
         ct.forward(branch)
@@ -147,9 +149,9 @@ def five_pointed_star(center_x, center_y, width):
     return center_x - d / 2, center_y + rc, d, h
 
 # (read five_pointed_star() above function description for details)
-def five_pointed_star_filled(center_x, center_y, width):
+def five_pointed_star_filled(center_x, center_y, width, rotation=0):
     ct.begin_fill()
-    x, y, w, h = five_pointed_star(center_x, center_y, width)
+    x, y, w, h = five_pointed_star(center_x, center_y, width, rotation)
     ct.end_fill()
     return x, y, w, h
 
