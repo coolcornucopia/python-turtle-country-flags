@@ -530,7 +530,12 @@ def test_primitives():
     five_pointed_star_filled(40, -80, 40)
 
 def test_flag(flag_function_name):
-    flag_function_name(-300, 200, 400, 400*2/3)
+    # Get window size
+    win_w = screen.window_width()
+    win_h = screen.window_height()
+    w = win_w * 90/100 # remove 5% borders
+    h = w * 2/3 # hard-coded proportion as 2/3 is "pretty usual"
+    flag_function_name(-w/2, h/2, w, h)
 
 
 ### MAIN ###
