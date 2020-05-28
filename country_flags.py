@@ -240,6 +240,17 @@ def flag_Benin(x, y, width, height):
     vertical_strips(x, y, width, height, '#FCD116', '#E8112D')
     rectangle_filled_color(x, y, width / 2.5, height, '#008751')
 
+def flag_China(x, y, width, height):
+    rectangle_filled_color(x, y, width, height, '#DE2910')
+    bsw = width * 19 / 100 # big star width
+    ssw = bsw / 3          # small star width
+    ct.color('#FFDE00')
+    five_pointed_star_filled(x + width * 1/6, y - height * 1/4, bsw)
+    five_pointed_star_filled(x + width * 1/3, y - height * 1/10, ssw, 360-23)
+    five_pointed_star_filled(x + width * 2/5, y - height * 1/5, ssw, 360-46)
+    five_pointed_star_filled(x + width * 2/5, y - height * 7/20, ssw, 360-70)
+    five_pointed_star_filled(x + width * 1/3, y - height * 9/20, ssw, 360-21)
+
 def flag_Myanmar(x, y, width, height):
     horizontal_strips(x, y, width, height, '#FECB00', '#34B233', '#EA2839')
     ct.color('white')
@@ -331,6 +342,7 @@ flags_list.append(Flag( 40,  2/3 , flag_Austria))
 flags_list.append(Flag( 50,  3/5 , flag_Bangladesh))
 flags_list.append(Flag( 56, 13/15, flag_Belgium))
 flags_list.append(Flag(204,  2/3 , flag_Benin))
+flags_list.append(Flag(156,  2/3 , flag_China))
 flags_list.append(Flag(104,  3/3 , flag_Myanmar))
 
 flags_list.append(Flag( 68, 15/22, flag_Bolivia))
