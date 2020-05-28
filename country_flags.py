@@ -203,6 +203,14 @@ def cross_filled(x, y, width, height,
     rectangle_filled(x1, y, w, height)
     rectangle_filled(x, y1, width, h)
 
+def rectangle_filled_color(x, y, width, height, color):
+    ct.color(color)
+    rectangle_filled(x, y, width, height)
+
+def circle_filled_color(center_x, center_y, diameter, color):
+    ct.color(color)
+    circle_filled(center_x, center_y, diameter)
+
 
 ### COUNTRY FLAG DRAWING FUNCTIONS ###
 
