@@ -567,6 +567,8 @@ def test_primitives():
     five_pointed_star_filled(40, -80, 40)
 
 def test_flag(flag_function_name):
+    # Set the screen in full screen
+    screen.setup(width = 1.0, height = 1.0)
     # Get window size
     win_w = screen.window_width()
     win_h = screen.window_height()
