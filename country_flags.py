@@ -610,13 +610,24 @@ def main():
             print("Use default \"" + DEFAULT_LANGUAGE + "\" language")
 
     if DEBUG:
-        print("Country list in alphabetical order:")
+        print("\nCountry list in country code order:")
         for d in flags_list:
             print("{:03d}".format(d.country_code),
                   get_country_name(d.country_code))
 
-        print("There are already " + str(len(flags_list)) +
-              " flags, great job!")
+        print("\nCountry list in alphabetical order:")
+        # Make a copy before modifying it
+        tmp_flags_list = flags_list.copy()
+        # Flag list alphabetical sort thanks to a lambda function
+        tmp_flags_list.sort(key=lambda x:
+                            strip_accents(get_country_name(x.country_code)))
+        for d in tmp_flags_list:
+            print(get_country_name(d.country_code) + "(" +
+                  "{:03d}".format(d.country_code) + ")")
+        del tmp_flags_list
+
+        print("\nThere are already " + str(len(flags_list)) +
+              " flags, great job!\n")
 
     #test_primitives()
     #test_flag(flag_Armenia)
