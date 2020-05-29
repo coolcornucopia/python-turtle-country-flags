@@ -226,10 +226,6 @@ def circle_coord(center_x, center_y, radius, angle_pc):
 # Note Following functions do not take into account directly the
 # aspect ratio and the border, so you can use them directly
 # depending of your need... or via the class with proper aspect ratio :-)
-# TODO re-order by country names
-def flag_Germany(x, y, width, height):
-    horizontal_strips(x, y, width, height, '#000', '#D00', '#FFCE00')
-
 def flag_Armenia(x, y, width, height):
     horizontal_strips(x, y, width, height, '#D90012', '#0033A0', '#F2A800')
 
@@ -247,6 +243,12 @@ def flag_Benin(x, y, width, height):
     vertical_strips(x, y, width, height, '#FCD116', '#E8112D')
     rectangle_filled_color(x, y, width / 2.5, height, '#008751')
 
+def flag_Bolivia(x, y, width, height):
+    vertical_strips(x, y, width, height, 'black', '#FAE042', '#ED2939')
+
+def flag_Bulgaria(x, y, width, height):
+    horizontal_strips(x, y, width, height, 'white', '#00966E', '#D62612')
+
 def flag_China(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#DE2910')
     bsw = width * 19 / 100 # big star width
@@ -257,6 +259,18 @@ def flag_China(x, y, width, height):
     five_pointed_star_filled(x + width * 2/5, y - height * 1/5, ssw, 360-46)
     five_pointed_star_filled(x + width * 2/5, y - height * 7/20, ssw, 360-70)
     five_pointed_star_filled(x + width * 1/3, y - height * 9/20, ssw, 360-21)
+
+def flag_Estonia(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#0072ce', 'black', 'white')
+
+def flag_France(x, y, width, height):
+    vertical_strips(x, y, width, height, '#002395', 'white', '#ED2939')
+
+def flag_Gabon(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#3a75c4', '#fcd116', '#009e60')
+
+def flag_Germany(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#000', '#D00', '#FFCE00')
 
 def flag_India(x, y, width, height):
     horizontal_strips(x, y, width, height, '#F93', 'white', '#128807')
@@ -290,6 +304,12 @@ def flag_India(x, y, width, height):
 def flag_Indonesia(x, y, width, height):
     horizontal_strips(x, y, width, height, 'red', 'white')
 
+def flag_Ivory_Coast(x, y, width, height):
+    vertical_strips(x, y, width, height, '#f77f00', 'white', '#009e60')
+
+def flag_Japan(x, y, width, height):
+    rectangle_circle(x, y, width, height, 1/2, 1/2, 2/5,
+                     'white', '#bc002d')
 def flag_Myanmar(x, y, width, height):
     horizontal_strips(x, y, width, height, '#FECB00', '#34B233', '#EA2839')
     ct.color('white')
@@ -297,29 +317,10 @@ def flag_Myanmar(x, y, width, height):
     d = h / 0.951  # See five_pointed_star_filled() computations
     five_pointed_star_filled(x + width / 2, y - height / 1.92, d)
 
-def flag_Bolivia(x, y, width, height):
-    vertical_strips(x, y, width, height, 'black', '#FAE042', '#ED2939')
-
-def flag_Bulgaria(x, y, width, height):
-    horizontal_strips(x, y, width, height, 'white', '#00966E', '#D62612')
-
-def flag_Ivory_Coast(x, y, width, height):
-    vertical_strips(x, y, width, height, '#f77f00', 'white', '#009e60')
-
-def flag_Estonia(x, y, width, height):
-    horizontal_strips(x, y, width, height, '#0072ce', 'black', 'white')
-
-def flag_France(x, y, width, height):
-    vertical_strips(x, y, width, height, '#002395', 'white', '#ED2939')
-
-def flag_Gabon(x, y, width, height):
-    horizontal_strips(x, y, width, height, '#3a75c4', '#fcd116', '#009e60')
-
 def flag_Sweden(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#006AA7')
     cross_filled(x, y, width, height, 6/16, 5/10,
                  1/8, 1/5, '#FECC00')
-
 
 def flag_United_States(x, y, width, height):
     # Red & white strips
@@ -349,10 +350,6 @@ def flag_United_States(x, y, width, height):
             star_x += 2 * star_width
         star_y -= star_height
 
-def flag_Japan(x, y, width, height):
-    rectangle_circle(x, y, width, height, 1/2, 1/2, 2/5,
-                     'white', '#bc002d')
-
 
 ### FLAGS MANAGEMENT FUNCTIONS ###
 
@@ -373,30 +370,26 @@ class Flag(object):
 
 
 # List of all the flags
-# TODO re-order by country names
 flags_list = list()
-flags_list.append(Flag(276,  3/5 , flag_Germany))
 flags_list.append(Flag( 51,  1/2 , flag_Armenia))
 flags_list.append(Flag( 40,  2/3 , flag_Austria))
 flags_list.append(Flag( 50,  3/5 , flag_Bangladesh))
 flags_list.append(Flag( 56, 13/15, flag_Belgium))
 flags_list.append(Flag(204,  2/3 , flag_Benin))
-flags_list.append(Flag(156,  2/3 , flag_China))
-flags_list.append(Flag(356,  2/3 , flag_India))
-flags_list.append(Flag(360,  2/3 , flag_Indonesia))
-flags_list.append(Flag(104,  3/3 , flag_Myanmar))
-
 flags_list.append(Flag( 68, 15/22, flag_Bolivia))
 flags_list.append(Flag(100,  3/5 , flag_Bulgaria))
-flags_list.append(Flag(384,  2/3 , flag_Ivory_Coast))
+flags_list.append(Flag(156,  2/3 , flag_China))
 flags_list.append(Flag(233,  7/11, flag_Estonia))
 flags_list.append(Flag(250,  2/3 , flag_France))
 flags_list.append(Flag(266,  3/4 , flag_Gabon))
-
+flags_list.append(Flag(276,  3/5 , flag_Germany))
+flags_list.append(Flag(356,  2/3 , flag_India))
+flags_list.append(Flag(360,  2/3 , flag_Indonesia))
+flags_list.append(Flag(384,  2/3 , flag_Ivory_Coast))
+flags_list.append(Flag(392,  2/3 , flag_Japan))
+flags_list.append(Flag(104,  3/3 , flag_Myanmar))
 flags_list.append(Flag(752, 10/19, flag_Sweden))
 flags_list.append(Flag(840, 10/19, flag_United_States))
-
-flags_list.append(Flag(392,  2/3 , flag_Japan))
 
 
 # Function to remove accents, useful for sorting, else "États-Unis" (fr)
