@@ -287,6 +287,9 @@ def flag_India(x, y, width, height):
         xx, yy = circle_coord(cx, cy, radius_external, i + 0.5/24)
         circle_filled_color(xx, yy, width * 10.5/1350, '#008')
 
+def flag_Indonesia(x, y, width, height):
+    horizontal_strips(x, y, width, height, 'red', 'white')
+
 def flag_Myanmar(x, y, width, height):
     horizontal_strips(x, y, width, height, '#FECB00', '#34B233', '#EA2839')
     ct.color('white')
@@ -380,6 +383,7 @@ flags_list.append(Flag( 56, 13/15, flag_Belgium))
 flags_list.append(Flag(204,  2/3 , flag_Benin))
 flags_list.append(Flag(156,  2/3 , flag_China))
 flags_list.append(Flag(356,  2/3 , flag_India))
+flags_list.append(Flag(360,  2/3 , flag_Indonesia))
 flags_list.append(Flag(104,  3/3 , flag_Myanmar))
 
 flags_list.append(Flag( 68, 15/22, flag_Bolivia))
