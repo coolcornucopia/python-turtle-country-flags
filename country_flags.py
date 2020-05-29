@@ -16,6 +16,7 @@ https://github.com/coolcornucopia/
 #   https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 
 from turtle import Turtle, Screen, mainloop
+import math
 import locale
 import unicodedata # Use to sort strings with accents, see strip_accents()
 import time
@@ -212,6 +213,12 @@ def rectangle_filled_color(x, y, width, height, color):
 def circle_filled_color(center_x, center_y, diameter, color):
     ct.color(color)
     circle_filled(center_x, center_y, diameter)
+
+def circle_coord(center_x, center_y, radius, angle_pc):
+    angle_rad = (2 * math.pi) * angle_pc
+    x = center_x + radius * math.cos(angle_rad)
+    y = center_y + radius * math.sin(angle_rad)
+    return x, y
 
 
 ### COUNTRY FLAG DRAWING FUNCTIONS ###
