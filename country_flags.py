@@ -258,6 +258,35 @@ def flag_China(x, y, width, height):
     five_pointed_star_filled(x + width * 2/5, y - height * 7/20, ssw, 360-70)
     five_pointed_star_filled(x + width * 1/3, y - height * 9/20, ssw, 360-21)
 
+def flag_India(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#F93', 'white', '#128807')
+    # Draw the Ashoka Chakra (wheel of 24 spokes & half-circles)
+    cx = x + width / 2
+    cy = y - height / 2
+    circle_filled_color(cx, cy, width * 17.8/100, '#008')
+    circle_filled_color(cx, cy, width * 15.6/100, 'white')
+    circle_filled_color(cx, cy, width * 3.1/100, '#008')
+    # Radius of circles linked to the polygon spokes
+    radius_internal = width * 12/1350
+    radius_middle = width * 42.15/1350
+    radius_external = width * 105/1350
+    angle_spoke = 4.9 / 360 # 4.9 degrees
+    for i in [x/24 for x in range(24)]:  # 0/24, 1/24, 2/24...
+        ### The polygon spoke
+        ct.color('#008')
+        ct.penup()
+        ct.goto(circle_coord(cx, cy, radius_internal, i))
+        ct.pendown()
+        ct.begin_fill()
+        ct.goto(circle_coord(cx, cy, radius_middle, i - angle_spoke))
+        ct.goto(circle_coord(cx, cy, radius_external, i))
+        ct.goto(circle_coord(cx, cy, radius_middle, i + angle_spoke))
+        ct.goto(circle_coord(cx, cy, radius_internal, i))
+        ct.end_fill()
+        # The circle
+        xx, yy = circle_coord(cx, cy, radius_external, i + 0.5/24)
+        circle_filled_color(xx, yy, width * 10.5/1350, '#008')
+
 def flag_Myanmar(x, y, width, height):
     horizontal_strips(x, y, width, height, '#FECB00', '#34B233', '#EA2839')
     ct.color('white')
@@ -350,6 +379,7 @@ flags_list.append(Flag( 50,  3/5 , flag_Bangladesh))
 flags_list.append(Flag( 56, 13/15, flag_Belgium))
 flags_list.append(Flag(204,  2/3 , flag_Benin))
 flags_list.append(Flag(156,  2/3 , flag_China))
+flags_list.append(Flag(356,  2/3 , flag_India))
 flags_list.append(Flag(104,  3/3 , flag_Myanmar))
 
 flags_list.append(Flag( 68, 15/22, flag_Bolivia))
