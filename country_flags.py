@@ -572,6 +572,9 @@ def test_flag(flag_function_name):
     w = win_w * 90/100 # remove 5% borders
     h = w * 2/3 # hard-coded proportion as 2/3 is "pretty usual"
     flag_function_name(-w/2, h/2, w, h)
+    # Add a border
+    ct.color(FLAG_BORDER_COL)
+    rectangle(-w/2, h/2, w, h)
 
 
 ### MAIN ###
