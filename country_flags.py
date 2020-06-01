@@ -592,7 +592,7 @@ def main():
     # Pen thickness
     ct.pensize(1)
 
-    update_configure(True)
+    update_configure(True)  # TODO Does not work
 
     install_event_management()
 
