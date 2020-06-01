@@ -369,27 +369,28 @@ class Flag(object):
                           width * self.ratio)
 
 
-# List of all the flags
-flags_list = list()
-flags_list.append(Flag( 51,  1/2 , flag_Armenia))
-flags_list.append(Flag( 40,  2/3 , flag_Austria))
-flags_list.append(Flag( 50,  3/5 , flag_Bangladesh))
-flags_list.append(Flag( 56, 13/15, flag_Belgium))
-flags_list.append(Flag(204,  2/3 , flag_Benin))
-flags_list.append(Flag( 68, 15/22, flag_Bolivia))
-flags_list.append(Flag(100,  3/5 , flag_Bulgaria))
-flags_list.append(Flag(156,  2/3 , flag_China))
-flags_list.append(Flag(233,  7/11, flag_Estonia))
-flags_list.append(Flag(250,  2/3 , flag_France))
-flags_list.append(Flag(266,  3/4 , flag_Gabon))
-flags_list.append(Flag(276,  3/5 , flag_Germany))
-flags_list.append(Flag(356,  2/3 , flag_India))
-flags_list.append(Flag(360,  2/3 , flag_Indonesia))
-flags_list.append(Flag(384,  2/3 , flag_Ivory_Coast))
-flags_list.append(Flag(392,  2/3 , flag_Japan))
-flags_list.append(Flag(104,  3/3 , flag_Myanmar))
-flags_list.append(Flag(752, 10/19, flag_Sweden))
-flags_list.append(Flag(840, 10/19, flag_United_States))
+# Dictionnary of all the flags (the key is the flag drawing function)
+flags_dict = dict()
+flags_dict[flag_Armenia]       = Flag( 51,  1/2 , flag_Armenia)
+flags_dict[flag_Austria]       = Flag( 40,  2/3 , flag_Austria)
+flags_dict[flag_Bangladesh]    = Flag( 50,  3/5 , flag_Bangladesh)
+flags_dict[flag_Belgium]       = Flag( 56, 13/15, flag_Belgium)
+flags_dict[flag_Benin]         = Flag(204,  2/3 , flag_Benin)
+flags_dict[flag_Bolivia]       = Flag( 68, 15/22, flag_Bolivia)
+flags_dict[flag_Bulgaria]      = Flag(100,  3/5 , flag_Bulgaria)
+flags_dict[flag_China]         = Flag(156,  2/3 , flag_China)
+flags_dict[flag_Estonia]       = Flag(233,  7/11, flag_Estonia)
+flags_dict[flag_France]        = Flag(250,  2/3 , flag_France)
+flags_dict[flag_Gabon]         = Flag(266,  3/4 , flag_Gabon)
+flags_dict[flag_Germany]       = Flag(276,  3/5 , flag_Germany)
+flags_dict[flag_India]         = Flag(356,  2/3 , flag_India)
+flags_dict[flag_Indonesia]     = Flag(360,  2/3 , flag_Indonesia)
+flags_dict[flag_Ivory_Coast]   = Flag(384,  2/3 , flag_Ivory_Coast)
+flags_dict[flag_Japan]         = Flag(392,  2/3 , flag_Japan)
+flags_dict[flag_Myanmar]       = Flag(104,  3/3 , flag_Myanmar)
+flags_dict[flag_Pakistan]      = Flag(586,  2/3 , flag_Pakistan)
+flags_dict[flag_Sweden]        = Flag(752, 10/19, flag_Sweden)
+flags_dict[flag_United_States] = Flag(840, 10/19, flag_United_States)
 
 
 # Function to remove accents, useful for sorting, else "États-Unis" (fr)
@@ -399,23 +400,18 @@ def strip_accents(s):
     return ''.join(c for c in unicodedata.normalize('NFD', s)
                    if unicodedata.category(c) != 'Mn')
 
-
-# TODO improve sorting (by name vs by country code)
-# Flag list alphabetical sort thanks to a lambda function
-#flags_list.sort(key=lambda x: strip_accents(x.country))
-
-# Flag list sort thanks to a lambda function
-flags_list.sort(key=lambda x: x.country_code)
+# Sort the flags dictionnary by country code
+sorted(flags_dict.items(), key=lambda x: x[1].country_code)
 
 
 def draw_all_flags(width, border, affiche_texte=False):
-    global flags_list
+    global flags_dict
     # Get window size
     window_width = screen.window_width()
     window_height = screen.window_height()
     #setup(window_width * 1.0, window_height * 1.0)
     #print(screensize(), screen.window_width(), screen.window_height())
-    flags_num = len(flags_list)
+    flags_num = len(flags_dict)
     x_start = -(window_width / 2) + border # TODO rename border please
     y_start = (window_height / 2) - border
     flags_horiz_max = int((window_width - 2 * border) / width)
@@ -430,9 +426,9 @@ def draw_all_flags(width, border, affiche_texte=False):
     x = x_start
     y = y_start
     print(x, y, border_inside)
-    for i in range(flags_num):
+    for i in flags_dict:
         # Get the flag and draw it
-        d = flags_list[i]
+        d = flags_dict[i]
         d.draw(x, y, width)
         # Draw the flag border
         ct.color(FLAG_BORDER_COL) # TODO find a better way for color config
@@ -614,22 +610,22 @@ def main():
 
     if DEBUG:
         print("\nCountry list in country code order:")
-        for d in flags_list:
-            print("{:03d}".format(d.country_code),
-                  get_country_name(d.country_code))
+        for key, value in flags_dict.items():
+            print("{:03d}".format(value.country_code),
+                  get_country_name(value.country_code))
 
         print("\nCountry list in alphabetical order:")
         # Make a copy before modifying it
-        tmp_flags_list = flags_list.copy()
-        # Flag list alphabetical sort thanks to a lambda function
-        tmp_flags_list.sort(key=lambda x:
-                            strip_accents(get_country_name(x.country_code)))
-        for d in tmp_flags_list:
-            print(get_country_name(d.country_code) + "(" +
-                  "{:03d}".format(d.country_code) + ")")
-        del tmp_flags_list
+        tmp_flags_dict = flags_dict.copy()
+        # Flag dict alphabetical sort thanks to a lambda function
+        sorted(tmp_flags_dict.items(), key=lambda x:
+               strip_accents(get_country_name(x[1].country_code)))
+        for key, value in tmp_flags_dict.items():
+            print(get_country_name(value.country_code) + "(" +
+                  "{:03d}".format(value.country_code) + ")")
+        del tmp_flags_dict
 
-        print("\nThere are already " + str(len(flags_list)) +
+        print("\nThere are already " + str(len(flags_dict)) +
               " flags, great job!\n")
 
     #test_primitives()
