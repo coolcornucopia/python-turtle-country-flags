@@ -34,6 +34,7 @@ DEFAULT_LANGUAGE = "en"
 fast_draw = True
 
 FLAG_BORDER_COL = 'black'
+FLAG_DEFAULT_RATIO = 2/3  # preferred flag ratio size between width & height
 
 DEBUG = False
 #DEBUG = True
@@ -562,7 +563,7 @@ def test_flag(flag_function_name, screenshot=False):
     win_w = screen.window_width()
     win_h = screen.window_height()
     w = win_w * 90/100 # remove 5% borders
-    h = w * 2/3 # hard-coded proportion as 2/3 is "pretty usual"
+    h = w * FLAG_DEFAULT_RATIO
     flag_function_name(-w/2, h/2, w, h)
     # Add a border
     ct.color(FLAG_BORDER_COL)
