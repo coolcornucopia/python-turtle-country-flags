@@ -556,7 +556,7 @@ def test_primitives():
     rectangle(x, y, w, h) # Rectangle containing the star
     five_pointed_star_filled(40, -80, 40)
 
-def test_flag(flag_function_name, screenshot=False):
+def test_flag(flag_function_name):
     # Set the screen in full screen
     screen.setup(width = 1.0, height = 1.0)
     # Get window size
@@ -568,13 +568,16 @@ def test_flag(flag_function_name, screenshot=False):
     # Add a border
     ct.color(FLAG_BORDER_COL)
     rectangle(-w/2, h/2, w, h)
+
+def screenshot(filename="screenshot"):
     # Screenshot
     # Note: The last drawing call is not captured in the screenshot
     # so the workaround consists in adding an extra command (here penup).
     # TODO Discuss with the communauty about this weird behaviour...
     ct.penup()
-    if screenshot:
-        screen.getcanvas().postscript(file="screenshot.eps", colormode='color')
+    filename += ".eps"
+    screen.getcanvas().postscript(file=filename, colormode='color')
+    print("Screenshot done, filename =", filename)
 
 
 ### MAIN ###
@@ -628,6 +631,7 @@ def main():
     #test_primitives()
     #test_flag(flag_Armenia)
     draw_all_flags(100, 20)
+    #screenshot("flag_France")
     update_do()
     return "Ready"
 
