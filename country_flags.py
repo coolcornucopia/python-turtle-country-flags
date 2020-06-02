@@ -354,20 +354,16 @@ def flag_United_States(x, y, width, height):
 ### FLAGS MANAGEMENT FUNCTIONS ###
 
 class Flag(object):
-    ratio_variable = False  # TODO find a better way
-    ratio_default = 2/3
     def __init__(self, country_code, ratio, drawing_func):
         self.country_code = country_code
-        if self.ratio_variable:
-            self.ratio = ratio
-        else:
-            self.ratio = self.ratio_default
+        self.ratio = ratio
         self.drawing_func = drawing_func
 
-    def draw(self, x, y, width):
-        self.drawing_func(x, y, width,
-                          width * self.ratio)
+    def draw(self, x, y, width, height):
+        self.drawing_func(x, y, width, height)
 
+    def draw_ratio(self, x, y, width):
+        self.drawing_func(x, y, width, width * self.ratio)
 
 # Dictionnary of all the flags (the key is the flag drawing function)
 flags_dict = dict()
@@ -429,7 +425,7 @@ def draw_all_flags(width, border, affiche_texte=False):
     for i in flags_dict:
         # Get the flag and draw it
         d = flags_dict[i]
-        d.draw(x, y, width)
+        d.draw_ratio(x, y, width)
         # Draw the flag border
         ct.color(FLAG_BORDER_COL) # TODO find a better way for color config
         rectangle(x, y, width, width * d.ratio)
