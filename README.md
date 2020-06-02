@@ -2,8 +2,8 @@
 Draw many country flags with the great Python Turtle.
 Have fun!
 
-## :warning: If you are learning Python, do your homework before copy them from here :smile:
-If you are learning Python, please do not simply copy/paste the source code from here because you will not really learn programming :-(... Instead, try first to do your **programming homeworks & challenges** then come back to have a look to what I propose here... and the most important: Have fun programming the Python Turtle :smile:.
+## If you are learning Python...
+If you are learning Python, please **do not simply copy/paste the source code from here because you will not really learn programming** :-(... Instead, try first to do your **programming homeworks & challenges** then come back to have a look to what I propose here... and the most important: **Have fun programming the Python Turtle :smile:**.
 
 ## Screenshots
 ![China flag](screenshots/flag_China.png?raw=true "flag_China")
@@ -13,10 +13,10 @@ If you are learning Python, please do not simply copy/paste the source code from
 
 ## Requirements regarding this source code
 There are various ways for drawing flags, hereafter my own requirements list:
-* No Python external modules to avoid dependencies (PIL, svg, pygame...).
-* Country flags as close as possible to original ones.
-* Not "too complex" Python code.
-* Country drawing flag functions as short as possible using good and readable helpers. Below a short example:
+* **No Python external modules** to avoid dependencies (PIL, svg, pygame...).
+* **Country flags close to original ones**.
+* **Not "too complex" Python code**.
+* **Country drawing flag functions as short as possible** using good and readable helpers, in order to be easily copy/paste somewhere else. Below a short example:
 ```Python
 def flag_Bulgaria(x, y, width, height):
     horizontal_strips(x, y, width, height, 'white', '#00966E', '#D62612')
@@ -45,6 +45,9 @@ Yes, you can do whatever you want with the source code here. Please have a look 
 
 ## Comments, questions?
 If you have comments or questions, send me a email at coolcornucopia@outlook.com.
+
 --
+
 Peace :smile:
+
 coolcornucopia
