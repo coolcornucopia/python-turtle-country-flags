@@ -569,6 +569,25 @@ def test_flag(flag_function_name):
     ct.color(FLAG_BORDER_COL)
     rectangle(-w/2, h/2, w, h)
 
+def test_flag_class(flag_function_name, ratio=False):
+    # Set the screen in full screen
+    screen.setup(width = 1.0, height = 1.0)
+    # Get window size
+    win_w = screen.window_width()
+    win_h = screen.window_height()
+    w = win_w * 90/100 # remove 5% borders
+    # Get the flag element and draw it according to its size ratio
+    flag = flags_dict[flag_function_name]
+    if ratio:
+        h = w * flag.ratio
+        flag.draw_ratio(-w/2, h/2, w)
+    else:
+        h = w * FLAG_DEFAULT_RATIO
+        flag.draw(-w/2, h/2, w, h)
+    # Add a border
+    ct.color(FLAG_BORDER_COL)
+    rectangle(-w/2, h/2, w, h)
+
 def screenshot(filename="screenshot"):
     # Screenshot
     # Note: The last drawing call is not captured in the screenshot
@@ -630,6 +649,8 @@ def main():
 
     #test_primitives()
     #test_flag(flag_Armenia)
+    #test_flag_class(flag_United_States, False)
+    #test_flag_class(flag_France, True)
     draw_all_flags(100, 20)
     #screenshot("flag_France")
     update_do()
