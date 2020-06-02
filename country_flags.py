@@ -323,31 +323,31 @@ def flag_Sweden(x, y, width, height):
                  1/8, 1/5, '#FECC00')
 
 def flag_United_States(x, y, width, height):
-    # Red & white strips
+    # 7 Red & 6 white strips
     r = '#B22234'
     w = 'white'
-    horizontal_strips(x, y, width, height, r, w, r, w, r, w, r, w, r, w,
-                      r, w, r)
+    horizontal_strips(x, y, width, height, *([r, w] * 6 + [r])) # r,w,r,w...,r
     # The blue rectangle
     # Note - 1 in y-axis for a better alignment
     rectangle_filled_color(x, y, width / 2.5, 7 * height / 13 - 1, '#3C3B6E')
     # The white stars
     ct.color('white')
     #ct.color('#717095', 'white') # false antialiasing if big flag
-    star_width = width / 30
-    star_height = width / 28
+    star_width = width / 32.5
+    star_height = height / 18.6
+    star_width_between = width / 15
     star_y = y - star_height
     stars_in_row = 5
     for _ in range(9):                 # vertical loop
         if stars_in_row == 6:          # switch between 5 & 6 row stars
             stars_in_row = 5
-            star_x = x + (2 * star_width)
+            star_x = x + star_width_between
         else:
             stars_in_row = 6
-            star_x = x + star_width
+            star_x = x + (star_width_between / 2)
         for _ in range(stars_in_row):  # horizontal loop
             five_pointed_star_filled(star_x, star_y, star_width)
-            star_x += 2 * star_width
+            star_x += star_width_between
         star_y -= star_height
 
 
