@@ -384,9 +384,9 @@ flags_dict[flag_India]         = Flag(356,  2/3 , flag_India)
 flags_dict[flag_Indonesia]     = Flag(360,  2/3 , flag_Indonesia)
 flags_dict[flag_Ivory_Coast]   = Flag(384,  2/3 , flag_Ivory_Coast)
 flags_dict[flag_Japan]         = Flag(392,  2/3 , flag_Japan)
-flags_dict[flag_Myanmar]       = Flag(104,  3/3 , flag_Myanmar)
+flags_dict[flag_Myanmar]       = Flag(104,  2/3 , flag_Myanmar)
 flags_dict[flag_Pakistan]      = Flag(586,  2/3 , flag_Pakistan)
-flags_dict[flag_Sweden]        = Flag(752, 10/19, flag_Sweden)
+flags_dict[flag_Sweden]        = Flag(752,  5/8 , flag_Sweden)
 flags_dict[flag_United_States] = Flag(840, 10/19, flag_United_States)
 
 
