@@ -241,11 +241,12 @@ def flag_Belgium(x, y, width, height):
     vertical_strips(x, y, width, height, 'black', '#FAE042', '#ED2939')
 
 def flag_Benin(x, y, width, height):
-    vertical_strips(x, y, width, height, '#FCD116', '#E8112D')
+    horizontal_strips(x, y, width, height, '#FCD116', '#E8112D')
     rectangle_filled_color(x, y, width / 2.5, height, '#008751')
 
 def flag_Bolivia(x, y, width, height):
-    vertical_strips(x, y, width, height, 'black', '#FAE042', '#ED2939')
+    horizontal_strips(x, y, width, height, '#D52B1E', '#F9E300', '#007934')
+    # TODO Please finalize me
 
 def flag_Bulgaria(x, y, width, height):
     horizontal_strips(x, y, width, height, 'white', '#00966E', '#D62612')
@@ -268,7 +269,7 @@ def flag_France(x, y, width, height):
     vertical_strips(x, y, width, height, '#002395', 'white', '#ED2939')
 
 def flag_Gabon(x, y, width, height):
-    horizontal_strips(x, y, width, height, '#3a75c4', '#fcd116', '#009e60')
+    horizontal_strips(x, y, width, height, '#009e60', '#fcd116', '#3a75c4')
 
 def flag_Germany(x, y, width, height):
     horizontal_strips(x, y, width, height, '#000', '#D00', '#FFCE00')
@@ -316,7 +317,7 @@ def flag_Myanmar(x, y, width, height):
     ct.color('white')
     h = 2 * height / 3
     d = h / 0.951  # See five_pointed_star_filled() computations
-    five_pointed_star_filled(x + width / 2, y - height / 1.92, d)
+    five_pointed_star_filled(x + width / 2, y - height / 1.9, d)
 
 def flag_Sweden(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#006AA7')
