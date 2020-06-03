@@ -319,6 +319,14 @@ def flag_Myanmar(x, y, width, height):
     d = h / 0.951  # See five_pointed_star_filled() computations
     five_pointed_star_filled(x + width / 2, y - height / 1.9, d)
 
+def flag_Pakistan(x, y, width, height):
+    rectangle_filled_color(x, y, width * 1/4, height, 'white')
+    rectangle_circle(x + width * 1/4, y, width * 3/4, height, 0.5, 0.5, 360/675, '#01411C', 'white')
+    circle_filled_color(x + width * 609/900, y - height * 340/600, width * 330/900, '#01411C')
+    ct.color('white')
+    five_pointed_star_filled(x + width * 650/900, y - height * 373/600, width * 114/900, 360-23)
+    # TODO Please fix me
+
 def flag_Sweden(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#006AA7')
     cross_filled(x, y, width, height, 6/16, 5/10,
