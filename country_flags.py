@@ -413,7 +413,7 @@ def strip_accents(s):
 sorted(flags_dict.items(), key=lambda x: x[1].country_code)
 
 
-def draw_all_flags(width, border, affiche_texte=False):
+def draw_all_flags(width, border, country_names=False, ratio=False):
     global flags_dict
     # Get window size
     window_width = screen.window_width()
@@ -428,7 +428,7 @@ def draw_all_flags(width, border, affiche_texte=False):
     # TODO rename border_inside
     border_inside = (window_width - (2 * border)) - (flags_horiz_max * width)
     border_inside /= (flags_horiz_max - 1)
-    if border_inside < 5:
+    if border_inside < border:
         flags_horiz_max -= 1
         border_inside = (window_width - (2 * border)) - (flags_horiz_max * width)
         border_inside /= (flags_horiz_max - 1)
@@ -437,16 +437,27 @@ def draw_all_flags(width, border, affiche_texte=False):
     print(x, y, border_inside)
     for i in flags_dict:
         # Get the flag and draw it
-        d = flags_dict[i]
-        d.draw_ratio(x, y, width)
+        flag = flags_dict[i]
+        if ratio:
+            h = width * flag.ratio
+            flag.draw_ratio(x, y, width)
+        else:
+            h = width * FLAG_DEFAULT_RATIO
+            flag.draw(x, y, width, h)
         # Draw the flag border
         ct.color(FLAG_BORDER_COL) # TODO find a better way for color config
-        rectangle(x, y, width, width * d.ratio)
+        rectangle(x, y, width, h)
+        # Add the flag name
+        if country_names:
+            ct.penup()
+            ct.goto(x + width / 2, y)
+            name = get_country_name(flag.country_code)
+            ct.write(name, align="center", font=("Arial", 11, "normal"))
         # Next flag
         x += width + border_inside
         if x > (window_width / 2) - border - width:
             x = x_start
-            y -= width * 2/3 + border_inside
+            y -= width * 2/3 + border_inside # TODO 2/3 here is not so nice
 
 # Helper function to avoid to test everytime if the country_names
 # dictionnary is empty or a country code is missing
@@ -659,8 +670,8 @@ def main():
     #test_flag(flag_Armenia)
     #test_flag_class(flag_United_States, False)
     #test_flag_class(flag_France, True)
-    draw_all_flags(100, 20)
     #screenshot("flag_France")
+    draw_all_flags(160, 60, country_names=True, ratio=False)
     update_do()
     return "Ready"
 
