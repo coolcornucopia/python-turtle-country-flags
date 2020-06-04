@@ -352,8 +352,7 @@ def flag_Russia(x, y, width, height):
 
 def flag_Sweden(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#006AA7')
-    cross_filled(x, y, width, height, 6/16, 5/10,
-                 1/8, 1/5, '#FECC00')
+    cross_filled(x, y, width, height, 3/8, 1/2, 1/8, 1/5, '#FECC00')
 
 def flag_United_States(x, y, width, height):
     # 7 Red & 6 white strips
