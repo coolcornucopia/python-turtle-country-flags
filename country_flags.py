@@ -161,6 +161,19 @@ def five_pointed_star_filled(center_x, center_y, width, rotation=0):
     ct.end_fill()
     return x, y, w, h
 
+def polygon(poly):
+    ct.penup()
+    for x, y in poly:
+        ct.goto(x, y)
+        if not ct.isdown():
+            ct.pendown()
+    ct.goto(tuple(poly[0])) # close the polygon
+
+def polygon_filled(poly):
+    ct.begin_fill()
+    polygon(poly)
+    ct.end_fill()
+
 
 ### HELPER FUNCTIONS FOR FLAGS DRAWING ###
 
@@ -218,6 +231,10 @@ def rectangle_filled_color(x, y, width, height, color):
 def circle_filled_color(center_x, center_y, diameter, color):
     ct.color(color)
     circle_filled(center_x, center_y, diameter)
+
+def polygon_filled_color(poly, color):
+    ct.color(color)
+    polygon_filled(poly)
 
 def circle_coord(center_x, center_y, radius, angle_pc):
     angle_rad = (2 * math.pi) * angle_pc
