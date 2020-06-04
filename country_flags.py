@@ -269,6 +269,10 @@ def flag_China(x, y, width, height):
 def flag_Estonia(x, y, width, height):
     horizontal_strips(x, y, width, height, '#0072ce', 'black', 'white')
 
+def flag_Finland(x, y, width, height):
+    rectangle_filled_color(x, y, width, height, 'white')
+    cross_filled(x, y, width, height, 65/180, 1/2, 1/6, 3/11, '#003580')
+
 def flag_France(x, y, width, height):
     vertical_strips(x, y, width, height, '#002395', 'white', '#ED2939')
 
@@ -277,6 +281,19 @@ def flag_Gabon(x, y, width, height):
 
 def flag_Germany(x, y, width, height):
     horizontal_strips(x, y, width, height, '#000', '#D00', '#FFCE00')
+
+def flag_Greece(x, y, width, height):
+    b = '#0D5EAF'
+    w = 'white'
+    horizontal_strips(x, y, width, height, *([b, w] * 4 + [b]))
+    rectangle_filled_color(x, y, width * 0.37, height * 5/9 - 1, b)
+    cross_filled(x, y, width * 0.37, height * 5/9 - 1, 1/2, 1/2,
+                 1/13.5/0.37, 1/9/(5/9), w)
+
+def flag_Iceland(x, y, width, height):
+    rectangle_filled_color(x, y, width, height, '#02529C')
+    cross_filled(x, y, width, height, 0.36, 1/2, 16/100, 2/9, 'white')
+    cross_filled(x, y, width, height, 0.36, 1/2, 8/100, 1/9, '#DC1E35')
 
 def flag_India(x, y, width, height):
     horizontal_strips(x, y, width, height, '#F93', 'white', '#128807')
@@ -329,6 +346,9 @@ def flag_Pakistan(x, y, width, height):
     circle_filled_color(x + width * 608/900, y - height * 259/600, width * 330/900, '#01411C')
     ct.color('white')
     five_pointed_star_filled(x + width * 652/900, y - height * 216/600, width * 114/900, 23)
+
+def flag_Russia(x, y, width, height):
+    horizontal_strips(x, y, width, height, 'white', '#0039A6', '#D52B1E')
 
 def flag_Sweden(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#006AA7')
@@ -389,15 +409,19 @@ flags_dict[flag_Bolivia]       = Flag( 68, 15/22, flag_Bolivia)
 flags_dict[flag_Bulgaria]      = Flag(100,  3/5 , flag_Bulgaria)
 flags_dict[flag_China]         = Flag(156,  2/3 , flag_China)
 flags_dict[flag_Estonia]       = Flag(233,  7/11, flag_Estonia)
+flags_dict[flag_Finland]       = Flag(246, 11/18, flag_Finland)
 flags_dict[flag_France]        = Flag(250,  2/3 , flag_France)
 flags_dict[flag_Gabon]         = Flag(266,  3/4 , flag_Gabon)
 flags_dict[flag_Germany]       = Flag(276,  3/5 , flag_Germany)
+flags_dict[flag_Greece]        = Flag(300,  2/3 , flag_Greece)
+flags_dict[flag_Iceland]       = Flag(352, 18/25, flag_Iceland)
 flags_dict[flag_India]         = Flag(356,  2/3 , flag_India)
 flags_dict[flag_Indonesia]     = Flag(360,  2/3 , flag_Indonesia)
 flags_dict[flag_Ivory_Coast]   = Flag(384,  2/3 , flag_Ivory_Coast)
 flags_dict[flag_Japan]         = Flag(392,  2/3 , flag_Japan)
 flags_dict[flag_Myanmar]       = Flag(104,  2/3 , flag_Myanmar)
 flags_dict[flag_Pakistan]      = Flag(586,  2/3 , flag_Pakistan)
+flags_dict[flag_Russia]        = Flag(643,  2/3 , flag_Russia)
 flags_dict[flag_Sweden]        = Flag(752,  5/8 , flag_Sweden)
 flags_dict[flag_United_States] = Flag(840, 10/19, flag_United_States)
 
