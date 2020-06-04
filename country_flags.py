@@ -367,6 +367,22 @@ def flag_Pakistan(x, y, width, height):
 def flag_Russia(x, y, width, height):
     horizontal_strips(x, y, width, height, 'white', '#0039A6', '#D52B1E')
 
+def flag_Seychelles(x, y, width, height):
+    bl = (x, y - height) # bottom left
+    xw = x + width
+    w = width / 3
+    h = height / 3
+    polygon_filled_color((bl, (x, y), (x + w, y)), '#003F87')
+    polygon_filled_color((bl, (x + w, y), (x + w * 2, y)), '#FCD856')
+    polygon_filled_color((bl, (x + w * 2, y), (xw, y), (xw, y - h)), '#D62828')
+    polygon_filled_color((bl, (xw, y - h), (xw, y - h * 2)), 'white')
+    polygon_filled_color((bl, (xw, y - h * 2), (xw, y - height)), '#007a3d')
+
+def flag_Somalia(x, y, width, height):
+    rectangle_filled_color(x, y, width, height, '#4189DD')
+    ct.color('white')
+    five_pointed_star_filled(x + width/2, y - height/2, width/3.28)
+
 def flag_Sweden(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#006AA7')
     cross_filled(x, y, width, height, 3/8, 1/2, 1/8, 1/5, '#FECC00')
@@ -438,6 +454,8 @@ flags_dict[flag_Japan]         = Flag(392,  2/3 , flag_Japan)
 flags_dict[flag_Myanmar]       = Flag(104,  2/3 , flag_Myanmar)
 flags_dict[flag_Pakistan]      = Flag(586,  2/3 , flag_Pakistan)
 flags_dict[flag_Russia]        = Flag(643,  2/3 , flag_Russia)
+flags_dict[flag_Seychelles]    = Flag(690,  1/2 , flag_Seychelles)
+flags_dict[flag_Somalia]       = Flag(706,  2/3 , flag_Somalia)
 flags_dict[flag_Sweden]        = Flag(752,  5/8 , flag_Sweden)
 flags_dict[flag_United_States] = Flag(840, 10/19, flag_United_States)
 
