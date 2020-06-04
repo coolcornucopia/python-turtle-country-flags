@@ -36,6 +36,8 @@ fast_draw = True
 FLAG_BORDER_COL = 'black'
 FLAG_DEFAULT_RATIO = 2/3  # preferred flag ratio size between width & height
 
+FULLSCREEN = True
+
 DEBUG = False
 #DEBUG = True
 
@@ -47,6 +49,8 @@ ct = Turtle()
 
 # TODO (resolution, default white background)
 screen = Screen()
+if FULLSCREEN:
+    screen.setup(width = 1.0, height = 1.0)
 
 my_screenclicked = False
 my_keypressed = False
@@ -565,8 +569,6 @@ def test_primitives():
     five_pointed_star_filled(40, -80, 40)
 
 def test_flag(flag_function_name):
-    # Set the screen in full screen
-    screen.setup(width = 1.0, height = 1.0)
     # Get window size
     win_w = screen.window_width()
     win_h = screen.window_height()
@@ -578,8 +580,6 @@ def test_flag(flag_function_name):
     rectangle(-w/2, h/2, w, h)
 
 def test_flag_class(flag_function_name, ratio=False):
-    # Set the screen in full screen
-    screen.setup(width = 1.0, height = 1.0)
     # Get window size
     win_w = screen.window_width()
     win_h = screen.window_height()
