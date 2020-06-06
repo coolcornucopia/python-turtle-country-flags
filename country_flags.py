@@ -232,6 +232,10 @@ def circle_filled_color(center_x, center_y, diameter, color):
     ct.color(color)
     circle_filled(center_x, center_y, diameter)
 
+def five_pointed_star_filled_color(center_x, center_y, width, color, rotation=0):
+    ct.color(color)
+    five_pointed_star_filled(center_x, center_y, width, rotation)
+
 def polygon_filled_color(poly, color):
     ct.color(color)
     polygon_filled(poly)
