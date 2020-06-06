@@ -374,10 +374,9 @@ def flag_Japan(x, y, width, height):
                      'white', '#bc002d')
 def flag_Myanmar(x, y, width, height):
     horizontal_strips(x, y, width, height, '#FECB00', '#34B233', '#EA2839')
-    ct.color('white')
     h = 2 * height / 3
     d = h / 0.951  # See five_pointed_star_filled() computations
-    five_pointed_star_filled(x + width / 2, y - height / 1.9, d)
+    five_pointed_star_filled_color(x + width / 2, y - height / 1.9, d, 'white')
 
 def flag_Pakistan(x, y, width, height):
     rectangle_filled_color(x, y, width * 1/4, height, 'white')
@@ -402,8 +401,7 @@ def flag_Seychelles(x, y, width, height):
 
 def flag_Somalia(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#4189DD')
-    ct.color('white')
-    five_pointed_star_filled(x + width/2, y - height/2, width/3.28)
+    five_pointed_star_filled_color(x + width/2, y - height/2, width/3.28, 'white')
 
 def flag_Sweden(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#006AA7')
