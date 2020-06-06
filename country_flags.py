@@ -258,6 +258,11 @@ def flag_Armenia(x, y, width, height):
 def flag_Austria(x, y, width, height):
     horizontal_strips(x, y, width, height, '#ED2939', 'white', '#ED2939')
 
+def flag_Bahamas(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#00778B', '#FFC72C', '#00778B')
+    polygon_filled_color(((x, y), (x + width/2.3, y - height/2),
+                          (x, y - height)), 'black')
+
 def flag_Bangladesh(x, y, width, height):
     rectangle_circle(x, y, width, height, 45/100, 1/2, 2/5,
                      '#006a4e', '#f42a41')
@@ -273,8 +278,17 @@ def flag_Bolivia(x, y, width, height):
     horizontal_strips(x, y, width, height, '#D52B1E', '#F9E300', '#007934')
     # TODO Please finalize me
 
+def flag_Botswana(x, y, width, height):
+    rectangle_filled_color(x, y, width, height, '#6DA9D2')
+    rectangle_filled_color(x, y - height * 3/8, width, height/4, 'white')
+    rectangle_filled_color(x, y - height/2.4, width, height/6, 'black')
+
 def flag_Bulgaria(x, y, width, height):
     horizontal_strips(x, y, width, height, 'white', '#00966E', '#D62612')
+
+def flag_Cameroon(x, y, width, height):
+    vertical_strips(x, y, width, height, '#007A5E', '#CE1126', '#FCD116')
+    five_pointed_star_filled_color(x + width/2, y - height/2, width/6, '#FCD116')
 
 def flag_China(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#DE2910')
@@ -299,6 +313,10 @@ def flag_France(x, y, width, height):
 
 def flag_Gabon(x, y, width, height):
     horizontal_strips(x, y, width, height, '#009e60', '#fcd116', '#3a75c4')
+
+def flag_Gambia(x, y, width, height):
+    horizontal_strips(x, y, width, height, '#CE1126', 'white', '#3A7728')
+    rectangle_filled_color(x, y - height/2.57, width, height/4.5, '#0C1C8C')
 
 def flag_Germany(x, y, width, height):
     horizontal_strips(x, y, width, height, '#000', '#D00', '#FFCE00')
@@ -438,16 +456,20 @@ class Flag(object):
 flags_dict = dict()
 flags_dict[flag_Armenia]       = Flag( 51,  1/2 , flag_Armenia)
 flags_dict[flag_Austria]       = Flag( 40,  2/3 , flag_Austria)
+flags_dict[flag_Bahamas]       = Flag( 44,  1/2 , flag_Bahamas)
 flags_dict[flag_Bangladesh]    = Flag( 50,  3/5 , flag_Bangladesh)
 flags_dict[flag_Belgium]       = Flag( 56, 13/15, flag_Belgium)
 flags_dict[flag_Benin]         = Flag(204,  2/3 , flag_Benin)
 flags_dict[flag_Bolivia]       = Flag( 68, 15/22, flag_Bolivia)
+flags_dict[flag_Botswana]      = Flag( 72,  2/3 , flag_Botswana)
 flags_dict[flag_Bulgaria]      = Flag(100,  3/5 , flag_Bulgaria)
+flags_dict[flag_Cameroon]      = Flag(120,  2/3 , flag_Cameroon)
 flags_dict[flag_China]         = Flag(156,  2/3 , flag_China)
 flags_dict[flag_Estonia]       = Flag(233,  7/11, flag_Estonia)
 flags_dict[flag_Finland]       = Flag(246, 11/18, flag_Finland)
 flags_dict[flag_France]        = Flag(250,  2/3 , flag_France)
 flags_dict[flag_Gabon]         = Flag(266,  3/4 , flag_Gabon)
+flags_dict[flag_Gambia]        = Flag(270,  2/3 , flag_Gambia)
 flags_dict[flag_Germany]       = Flag(276,  3/5 , flag_Germany)
 flags_dict[flag_Greece]        = Flag(300,  2/3 , flag_Greece)
 flags_dict[flag_Iceland]       = Flag(352, 18/25, flag_Iceland)
