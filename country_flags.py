@@ -407,6 +407,24 @@ def flag_Sweden(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#006AA7')
     cross_filled(x, y, width, height, 3/8, 1/2, 1/8, 1/5, '#FECC00')
 
+def flag_United_Kingdom(x, y, width, height):
+    rectangle_filled_color(x, y, width, height, '#012169')
+    r = x + width   # right-x
+    b = y - height  # bottom-y
+    w = width / 27  # 1 unit on x-axis related to the diagonal
+    h = height / 27 # 1 unit on y-axis related to the diagonal
+    # Cross of Saint Andrew
+    polygon_filled_color(((x, y), (x, y - 3*h), (r - 3*w, b), (r, b), (r, b + 3*h), (x + 3*w, y)), 'white')
+    polygon_filled_color(((x, b), (x + 3*w, b), (r, y - 3*h), (r, y), (r - 3*w, y), (x, b + 3*h)), 'white')
+    # Cross of Saint Patrick
+    polygon_filled_color(((x, y), (x, y - 2*h), (x +  7*w, y - 9*h), (x + 9*w, y - 9*h)), '#C8102E')
+    polygon_filled_color(((r, b), (r, b + 2*h), (r -  7*w, b + 9*h), (r - 9*w, b + 9*h)), '#C8102E')
+    polygon_filled_color(((x, b), (x + 2*w, b), (x + 11*w, b + 9*h), (x + 9*w, b + 9*h)), '#C8102E')
+    polygon_filled_color(((r, y), (r - 2*w, y), (r - 11*w, y - 9*h), (r - 9*w, y - 9*h)), '#C8102E')
+    # Cross of Saint George
+    cross_filled(x, y, width, height, 1/2, 1/2, 1/6, 1/3, 'white')
+    cross_filled(x, y, width, height, 1/2, 1/2, 1/10, 1/5, '#C8102E')
+
 def flag_United_States(x, y, width, height):
     # 7 Red & 6 white strips
     r = '#B22234'
@@ -481,6 +499,7 @@ flags_dict[flag_Russia]        = Flag(643,  2/3 , flag_Russia)
 flags_dict[flag_Seychelles]    = Flag(690,  1/2 , flag_Seychelles)
 flags_dict[flag_Somalia]       = Flag(706,  2/3 , flag_Somalia)
 flags_dict[flag_Sweden]        = Flag(752,  5/8 , flag_Sweden)
+flags_dict[flag_United_Kingdom]= Flag(826,  1/2 , flag_United_Kingdom)
 flags_dict[flag_United_States] = Flag(840, 10/19, flag_United_States)
 
 
