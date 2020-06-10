@@ -72,8 +72,8 @@ def prepare_drawing(x, y, rotation=0):
     ct.setheading(rotation)
     ct.pendown()
 
-def rectangle(x, y, width, height):
-    prepare_drawing(x, y)
+def rectangle(x, y, width, height, rotation=0):
+    prepare_drawing(x, y, rotation)
     # Note: we may use a loop but it does not bring that much
     ct.forward(width)
     ct.right(90)
@@ -83,16 +83,16 @@ def rectangle(x, y, width, height):
     ct.right(90)
     ct.forward(height)
 
-def rectangle_filled(x, y, width, height):
+def rectangle_filled(x, y, width, height, rotation=0):
     ct.begin_fill()
-    rectangle(x, y, width, height)
+    rectangle(x, y, width, height, rotation)
     ct.end_fill()
 
-def square(x, y, width):
-    rectangle(x, y, width, width)
+def square(x, y, width, rotation=0):
+    rectangle(x, y, width, width, rotation)
 
-def square_filled(x, y, width):
-    rectangle_filled(x, y, width, width)
+def square_filled(x, y, width, rotation=0):
+    rectangle_filled(x, y, width, width, rotation)
 
 # For the circle, use the diameter instead of the radius because it is
 # then easier to make objects touch themselves, avoiding x2 in user code.
@@ -115,7 +115,6 @@ def cross(center_x, center_y, width):
     prepare_drawing(center_x, center_y + (width / 2))
     ct.right(90)
     ct.forward(width)
-
 
 # This five pointed star function draws a star "standing with arms open
 # horizontally" and a span of "width" and returns the coordinates and sizes
@@ -251,9 +250,9 @@ def cross_filled(x, y, width, height,
     rectangle_filled(x1, y, w, height)
     rectangle_filled(x, y1, width, h)
 
-def rectangle_filled_color(x, y, width, height, color):
+def rectangle_filled_color(x, y, width, height, color, rotation=0):
     ct.color(color)
-    rectangle_filled(x, y, width, height)
+    rectangle_filled(x, y, width, height, rotation)
 
 def circle_filled_color(center_x, center_y, diameter, color):
     ct.color(color)
