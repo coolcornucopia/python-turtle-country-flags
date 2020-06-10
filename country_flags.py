@@ -174,6 +174,33 @@ def polygon_filled(poly):
     polygon(poly)
     ct.end_fill()
 
+# A "start=0" angle corresponds to the bottom of the pie (Python
+# Turtle convention).
+def pie(center_x, center_y, diameter, start, end):
+    # Move the circle center following Turtle circle() usage
+    prepare_drawing(center_x, center_y - diameter / 2)
+    # Save the initial fill context and stop it temporarily
+    filling = ct.filling()
+    ct.end_fill()
+    # Move the turtle at the start position with the start angle
+    # and save this start position
+    ct.penup()
+    ct.circle(diameter / 2, start)
+    x, y = ct.pos()
+    # Restore the filling context is necessary and draw the circle arc
+    ct.pendown()
+    if filling:
+        ct.begin_fill()
+    ct.circle(diameter / 2, end - start)
+    # Close the pie slice
+    ct.goto(center_x, center_y) # Go to the pie slice center
+    ct.goto(x, y)               # Go to the start position
+
+def pie_filled(center_x, center_y, diameter, start, end):
+    ct.begin_fill()
+    pie(center_x, center_y, diameter, start, end)
+    ct.end_fill()
+
 
 ### HELPER FUNCTIONS FOR FLAGS DRAWING ###
 
@@ -239,6 +266,10 @@ def five_pointed_star_filled_color(center_x, center_y, width, color, rotation=0)
 def polygon_filled_color(poly, color):
     ct.color(color)
     polygon_filled(poly)
+
+def pie_filled_color(center_x, center_y, diameter, start, end, color):
+    ct.color(color)
+    pie_filled(center_x, center_y, diameter, start, end)
 
 def circle_coord(center_x, center_y, radius, angle_pc):
     angle_rad = (2 * math.pi) * angle_pc
