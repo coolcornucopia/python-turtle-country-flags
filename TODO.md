@@ -14,4 +14,4 @@
 * Fix rotation parameter (clockwise or counter clockwise?)
 * test: add pie and rotation new helpers tests.
 * country names: write on several lines if necessary.
-
+* Use trigonometric convention everywhere for the rotation parameter.
