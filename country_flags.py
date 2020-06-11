@@ -433,6 +433,37 @@ def flag_Somalia(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#4189DD')
     five_pointed_star_filled_color(x + width/2, y - height/2, width/3.28, 'white')
 
+def flag_South_Korea(x, y, width, height):
+    rectangle_filled_color(x, y, width, height, 'white')
+    # Taegeuk (2 half pies + 2 small circles)
+    red, blue = '#CD2E3A', '#0047A0'
+    xc = x + width / 2  # center x
+    yc = y - height / 2 # center y
+    w = width / 3       # following widths are relative to the width/3
+    r = 90 - 180 * math.atan(2/3) / math.pi # diagonal angle (degrees)
+    pie_filled_color(xc, yc, w, r, r + 180, red)
+    pie_filled_color(xc, yc, w, r - 180, r, blue)
+    circle_filled_color(*circle_coord(xc, yc, w/4, (r + 90)/360), w/2, red)
+    circle_filled_color(*circle_coord(xc, yc, w/4, (r - 90)/360), w/2, blue)
+    # Trigrams (Qián, Kǎn, Kūn, Lí)
+    tl = [0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0] # 0 unbroken line, 1 broken lines
+    lw = w/2/2          # line half width (the big line)
+    lh = w/12           # line height
+    c = w/24/2          # line hole half width
+    a = w * (1/2 + 1/4) # circle radius of the trigram 1st line
+    d = lh + w/24       # distance between 2 lines (line height + space)
+    lwm = [(lw * 2, lw), (lw - c, -c), (lw - c, lw)] # (line width, move) x 3
+    k = 0
+    for j in [r + 180, -r + 180, r, -r]:     # 4 trigrams...
+        for radius in [a, a + d, a + 2 * d]: # composed of 3...
+            for v in range(tl[k] + 1):       # 2 broken or 1 unbroken lines
+                line_w, move = lwm[v + tl[k]]
+                prepare_drawing(*circle_coord(xc, yc, radius, (j - 90) / 360), j)
+                ct.penup()
+                ct.backward(move)
+                rectangle_filled_color(*ct.pos(), line_w, lh, 'black', j)
+            k += 1
+
 def flag_Sweden(x, y, width, height):
     rectangle_filled_color(x, y, width, height, '#006AA7')
     cross_filled(x, y, width, height, 3/8, 1/2, 1/8, 1/5, '#FECC00')
@@ -528,6 +559,7 @@ flags_dict[flag_Pakistan]      = Flag(586,  2/3 , flag_Pakistan)
 flags_dict[flag_Russia]        = Flag(643,  2/3 , flag_Russia)
 flags_dict[flag_Seychelles]    = Flag(690,  1/2 , flag_Seychelles)
 flags_dict[flag_Somalia]       = Flag(706,  2/3 , flag_Somalia)
+flags_dict[flag_South_Korea]   = Flag(410,  2/3 , flag_South_Korea)
 flags_dict[flag_Sweden]        = Flag(752,  5/8 , flag_Sweden)
 flags_dict[flag_United_Kingdom]= Flag(826,  1/2 , flag_United_Kingdom)
 flags_dict[flag_United_States] = Flag(840, 10/19, flag_United_States)
