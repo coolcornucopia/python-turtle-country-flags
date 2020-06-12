@@ -15,3 +15,4 @@
 * test: add pie and rotation new helpers tests.
 * country names: write on several lines if necessary.
 * Use trigonometric convention everywhere for the rotation parameter.
+* Use "DejaVu Sans" instead of Arial on Linux.
