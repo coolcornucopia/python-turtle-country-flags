@@ -780,6 +780,14 @@ def screenshot(filename="screenshot"):
     screen.getcanvas().postscript(file=filename, colormode='color')
     print("Screenshot done, filename =", filename)
 
+def screenshot_all():
+    for i in flags_dict:
+        drawing_func = flags_dict[i].drawing_func
+        test_flag_class(drawing_func, True)
+        screen.update()
+        screenshot(drawing_func.__name__)
+        ct.clear()
+
 
 ### MAIN ###
 
@@ -835,6 +843,7 @@ def main():
     #test_flag_class(flag_France, True)
     #screenshot("flag_France")
     draw_all_flags(160, 60, country_names=True, ratio=False)
+    #screenshot_all()
     update_do()
     return "Ready"
 
