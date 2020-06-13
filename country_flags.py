@@ -807,7 +807,7 @@ def main():
     #locale.setlocale(locale.LC_ALL, "fr_FR.utf8")
     #locale.setlocale(locale.LC_ALL, "it_IT.utf8")
     #locale.setlocale(locale.LC_ALL, "de_DE.utf8")
-    loc = locale.getlocale()
+    loc = locale.getdefaultlocale()
     language = loc[0].split("_", 1)[0]  # convert "en_US" to "en"
     #print(loc[0], language)
 
