@@ -15,7 +15,7 @@ https://github.com/coolcornucopia/
 #   https://en.wikipedia.org/wiki/List_of_aspect_ratios_of_national_flags
 #   https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 
-from turtle import Turtle, Screen, mainloop
+from turtle import Turtle, Screen, Shape, mainloop
 import math
 import locale
 import unicodedata # Use to sort strings with accents, see strip_accents()
@@ -33,6 +33,12 @@ DEFAULT_LANGUAGE = "en"
 
 DEFAULT_FAST_DRAW = True
 DEFAULT_ANIMATION_SPEED = 3 # Only possible if DEFAULT_FAST_DRAW is False
+
+# Create a black & white "always visible" turtle shape.
+# This is usefull when both fill & pen colors are
+# identical to the background color making the turtle
+# invisible (white on white).
+USE_ALWAYS_VISIBLE_TURTLE_SHAPE = True
 
 FLAG_BORDER_COL = 'black'
 FLAG_DEFAULT_RATIO = 2/3  # preferred flag ratio size between width & height
@@ -799,6 +805,13 @@ def main():
     ct.color('black', 'red')
     # Pen thickness
     ct.pensize(1)
+
+    if USE_ALWAYS_VISIBLE_TURTLE_SHAPE:
+        # Only compound shape supports colors
+        s = Shape("compound")
+        s.addcomponent(ct.get_shapepoly(), "white", "black")
+        screen.register_shape("always_visible_shape", s)
+        ct.shape("always_visible_shape")
 
     update_configure(DEFAULT_FAST_DRAW, DEFAULT_ANIMATION_SPEED)
 
