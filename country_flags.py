@@ -31,7 +31,8 @@ MOUSE_BUTTON_NORMAL = 1
 COUNTRY_NAMES_FILENAME = "country_names"
 DEFAULT_LANGUAGE = "en"
 
-fast_draw = True
+DEFAULT_FAST_DRAW = True
+DEFAULT_ANIMATION_SPEED = 3 # Only possible if DEFAULT_FAST_DRAW is False
 
 FLAG_BORDER_COL = 'black'
 FLAG_DEFAULT_RATIO = 2/3  # preferred flag ratio size between width & height
@@ -54,6 +55,8 @@ if FULLSCREEN:
 
 my_screenclicked = False
 my_keypressed = False
+
+fast_draw = False
 
 country_names = {}  # Content depends on the language
 
@@ -797,7 +800,7 @@ def main():
     # Pen thickness
     ct.pensize(1)
 
-    update_configure(True)  # TODO Does not work
+    update_configure(DEFAULT_FAST_DRAW, DEFAULT_ANIMATION_SPEED)
 
     install_event_management()
 
