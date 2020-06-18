@@ -787,7 +787,8 @@ def screenshot(filename="screenshot"):
     ct.penup()
     filename += ".eps"
     screen.getcanvas().postscript(file=filename, colormode='color')
-    print("Screenshot done, filename =", filename)
+    if DEBUG:
+        print("Screenshot done, filename =", filename)
 
 def screenshot_all():
     for i in flags_dict:
