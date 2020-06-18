@@ -60,7 +60,7 @@ ct = Turtle()
 # TODO (resolution, default white background)
 screen = Screen()
 if FULLSCREEN:
-    screen.setup(width = 1.0, height = 1.0)
+    screen.setup(width = 0.80, height = 0.80)
 
 my_screenclicked = False
 my_keypressed = False
