@@ -34,6 +34,9 @@ DEFAULT_LANGUAGE = "en"
 DEFAULT_FAST_DRAW = True
 DEFAULT_ANIMATION_SPEED = 3 # Only possible if DEFAULT_FAST_DRAW is False
 
+DEFAULT_SCREENSHOT_ANIM_SPEED = DEFAULT_ANIMATION_SPEED
+DEFAULT_SCREENSHOT_ANIM_FPS = 20
+
 # Create a black & white "always visible" turtle shape.
 # This is usefull when both fill & pen colors are
 # identical to the background color making the turtle
@@ -779,12 +782,13 @@ def test_flag_class(flag_function_name, ratio=False):
     ct.color(FLAG_BORDER_COL)
     rectangle(-w/2, h/2, w, h)
 
-def screenshot(filename="screenshot"):
+def screenshot(filename="screenshot", need_penup=True):
     # Screenshot
     # Note: The last drawing call is not captured in the screenshot
     # so the workaround consists in adding an extra command (here penup).
     # TODO Discuss with the communauty about this weird behaviour...
-    ct.penup()
+    if need_penup:
+        ct.penup()
     filename += ".eps"
     screen.getcanvas().postscript(file=filename, colormode='color')
     if DEBUG:
@@ -797,6 +801,63 @@ def screenshot_all():
         screen.update()
         screenshot(drawing_func.__name__)
         ct.clear()
+
+# Hereafter linux commands used to convert the screenshot eps files
+# to a webm video (better than animated gif)
+# 1) convert eps to png with inkscape
+# 2) convert png to webm animation with ffmpeg
+# export flag=flag_South_Korea
+# export fps=20
+# export width=416
+# for n in `ls $flag*.eps | cut -f1 -d'.'`; do inkscape $n.eps -o $n.png -y 255 -w $width; done
+# ffmpeg -framerate $fps -i $flag%04d.png $flag.webm
+# Note: if you prefer a gif file, instead the ffmpeg command, use:
+# convert -loop 0 -delay 1x$fps $flag*.png $flag.gif
+
+screenshot_anim_running = False
+screenshot_anim_filename = ""
+screenshot_anim_fps = DEFAULT_SCREENSHOT_ANIM_FPS
+
+def screenshot_anim_play(counter=[0]):
+    counter[0] += 1
+    filename = screenshot_anim_filename + "{0:04d}".format(counter[0])
+    screenshot(filename, False)
+    fps = screenshot_anim_fps
+    if screenshot_anim_running:
+        screen.ontimer(screenshot_anim_play, int(1000 / fps))
+
+def screenshot_anim_start(width, height, filename, fps=10, speed=2):
+    global screenshot_anim_running
+    global screenshot_anim_filename
+    global screenshot_anim_fps
+    if DEBUG:
+        print(f"screenshot_anim_start({width}, {height}, {filename}, "
+              f"fps={fps}, speed={speed})")
+    screen.setup(width, height)
+    ct.speed(speed)
+    ct.showturtle() # better to see the turtle moving too :-)
+    screen.tracer(True)
+    screenshot_anim_running = True
+    screenshot_anim_filename = filename
+    screenshot_anim_fps = fps
+    screenshot_anim_play()
+
+def screenshot_anim_stop():
+    global screenshot_anim_running
+    screenshot_anim_running = False
+    # Wait a short while to be sure last image has been saved
+    # and to see a longer time the finale result
+    time.sleep(3)
+    if DEBUG:
+        print("screenshot_anim_stop()")
+
+def test_screenshot_anim(flag_function_name):
+    ratio = flags_dict[flag_function_name].ratio
+    screenshot_anim_start(416, 416 * ratio, flag_function_name.__name__,
+                          fps=DEFAULT_SCREENSHOT_ANIM_FPS,
+                          speed=DEFAULT_SCREENSHOT_ANIM_SPEED)
+    test_flag_class(flag_function_name, True)
+    screenshot_anim_stop()
 
 
 ### MAIN ###
@@ -861,6 +922,8 @@ def main():
     #screenshot("flag_France")
     draw_all_flags(160, 60, country_names=True, ratio=False)
     #screenshot_all()
+    #test_screenshot_anim(flag_South_Korea)
+
     update_do()
     return "Ready"
 
