@@ -688,16 +688,6 @@ def my_onkeypress():
     my_keypressed = True
     #print("my_keypressed =", my_keypressed)
 
-def frame():
-    print("frame...")
-    #screen.update()
-    screen.ontimer(frame, 1000) # TODO hard coded value
-
-def wait_click_or_key():
-    while not my_screenclicked and not my_keypressed:
-        screen.update()
-        time.sleep(0.5)
-
 def install_event_management():
     # Install event capture
     screen.onscreenclick(my_exit_mouse, btn=MOUSE_BUTTON_EXIT)
@@ -711,7 +701,6 @@ def install_event_management():
     my_keypressed = False
 
     screen.listen()
-    frame()
 
 
 ### SCREEN UPDATE HELPERS ###
