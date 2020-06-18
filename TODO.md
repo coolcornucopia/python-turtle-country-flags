@@ -16,3 +16,6 @@
 * country names: write on several lines if necessary.
 * Use trigonometric convention everywhere for the rotation parameter.
 * Use "DejaVu Sans" instead of Arial on Linux.
+* Avoid to have a turtle with the same color of the background.
+* There are warning messages sometimes when pressing ESC to exit.
+* Regroup properly variables & constants at the beginning of the code.
