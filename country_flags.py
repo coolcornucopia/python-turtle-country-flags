@@ -794,14 +794,18 @@ def screenshot_all():
 # Hereafter linux commands used to convert the screenshot eps files
 # to a webm video (better than animated gif)
 # 1) convert eps to png with inkscape
-# 2) convert png to webm animation with ffmpeg
+# 2-webm) convert png to webm animation with ffmpeg
+# 2-gif) convert png to gif animation with ImageMagick & gifsicle
 # export flag=flag_South_Korea
 # export fps=20
 # export width=416
 # for n in `ls $flag*.eps | cut -f1 -d'.'`; do inkscape $n.eps -o $n.png -y 255 -w $width; done
 # ffmpeg -framerate $fps -i $flag%04d.png $flag.webm
 # Note: if you prefer a gif file, instead the ffmpeg command, use:
-# convert -loop 0 -delay 1x$fps $flag*.png $flag.gif
+# convert -loop 0 -delay 1x$fps -layers Optimize $flag*.png $flag.gif
+# Note: if you want to optimize the gif animation, use:
+# gifsicle -O3 --colors 256 $flag.gif -o $flag_optimized.gif
+
 
 screenshot_anim_running = False
 screenshot_anim_filename = ""
