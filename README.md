@@ -6,8 +6,8 @@ Have fun!
 If you are learning Python, please **do not simply copy/paste the source code from here because you will not really learn programming** :-(... Instead, try first to do your **programming homeworks & challenges** then come back to have a look to what I propose here... and the most important: **Have fun programming the Python Turtle :smile:**.
 
 ## Screenshots
-|               |               |               |
-| ------------- | ------------- | ------------- |
+|     |     |     |
+| :-: | :-: | :-: |
 | ![Python Turtle Bahamas flag](screenshots/flag_Bahamas.png?raw=true "Python Turtle Bahamas flag") | ![Python Turtle Bangladesh flag](screenshots/flag_Bangladesh.png?raw=true "Python Turtle Bangladesh flag") | ![Python Turtle Botswana flag](screenshots/flag_Botswana.png?raw=true "Python Turtle Botswana flag") |
 | ![Python Turtle Cameroon flag](screenshots/flag_Cameroon.png?raw=true "Python Turtle Cameroon flag") | ![Python Turtle China flag](screenshots/flag_China.png?raw=true "Python Turtle China flag") | ![Python Turtle Gambia flag](screenshots/flag_Gambia.png?raw=true "Python Turtle Gambia flag") |
 | ![Python Turtle Greece flag](screenshots/flag_Greece.png?raw=true "Python Turtle Greece flag") | ![Python Turtle Iceland flag](screenshots/flag_Iceland.png?raw=true "Python Turtle Iceland flag") | ![Python Turtle India flag](screenshots/flag_India.png?raw=true "Python Turtle India flag") |
@@ -16,6 +16,10 @@ If you are learning Python, please **do not simply copy/paste the source code fr
 
 
 ![Python Turtle flags (page 1)](screenshots/flag_All_page_1.png?raw=true "Python Turtle country flags")
+
+|     |     |
+| :-: | :-: |
+| ![flag_South_Korea_gifsicle_o3_colors_256.gif](screenshots/flag_South_Korea_gifsicle_o3_colors_256.gif?raw=true "flag_South_Korea_gifsicle_o3_colors_256.gif") |  |
 
 
 ## Requirements regarding this source code
