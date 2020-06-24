@@ -12,14 +12,14 @@ If you are learning Python, please **do not simply copy/paste the source code fr
 | ![Python Turtle Cameroon flag](screenshots/flag_Cameroon.png?raw=true "Python Turtle Cameroon flag") | ![Python Turtle China flag](screenshots/flag_China.png?raw=true "Python Turtle China flag") | ![Python Turtle Gambia flag](screenshots/flag_Gambia.png?raw=true "Python Turtle Gambia flag") |
 | ![Python Turtle Greece flag](screenshots/flag_Greece.png?raw=true "Python Turtle Greece flag") | ![Python Turtle Iceland flag](screenshots/flag_Iceland.png?raw=true "Python Turtle Iceland flag") | ![Python Turtle India flag](screenshots/flag_India.png?raw=true "Python Turtle India flag") |
 | ![Python Turtle Pakistan flag](screenshots/flag_Pakistan.png?raw=true "Python Turtle Pakistan flag") | ![Python Turtle Seychelles flag](screenshots/flag_Seychelles.png?raw=true "Python Turtle Seychelles flag") | ![Python Turtle Somalia flag](screenshots/flag_Somalia.png?raw=true "Python Turtle Somalia flag") |
-| ![Python Turtle South_Korea flag](screenshots/flag_South_Korea.png?raw=true "Python Turtle South_Korea flag") | ![Python Turtle United_Kingdom flag](screenshots/flag_United_Kingdom.png?raw=true "Python Turtle United Kingdom flag") | ![Python Turtle United States flag](screenshots/flag_United_States.png?raw=true "Python Turtle United States flag") |
+| ![Python Turtle South Korea flag](screenshots/flag_South_Korea.png?raw=true "Python Turtle South Korea flag") | ![Python Turtle United Kingdom flag](screenshots/flag_United_Kingdom.png?raw=true "Python Turtle United Kingdom flag") | ![Python Turtle United States flag](screenshots/flag_United_States.png?raw=true "Python Turtle United States flag") |
 
 
 ![Python Turtle flags (page 1)](screenshots/flag_All_page_1.png?raw=true "Python Turtle country flags")
 
 |     |     |
 | :-: | :-: |
-| ![flag_South_Korea_gifsicle_o3_colors_256.gif](screenshots/flag_South_Korea_gifsicle_o3_colors_256.gif?raw=true "flag_South_Korea_gifsicle_o3_colors_256.gif") |  |
+| ![Python Turtle South Korea flag animation](screenshots/flag_South_Korea_gifsicle_o3_colors_256.gif?raw=true "Python Turtle South Korea flag animation") | ![Python Turtle United Kingdom flag animation](screenshots/flag_United_Kingdom_gifsicle_o3_colors_256.gif?raw=true "Python Turtle United Kingdom flag animation") |
 
 
 ## Requirements regarding this source code
