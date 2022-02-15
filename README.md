@@ -54,11 +54,10 @@ Of course, another solution could be to download Wikipedia svg flags and to draw
 ## Can I use the source code from here in my application
 Yes, you can do whatever you want with the source code here. Please have a look to the [LICENSE](LICENSE) file.
 
-## Comments, questions?
-If you have comments or questions, send me a email at coolcornucopia@outlook.com.
+## Any questions or comments are welcome :bird:
+If you have any comments or questions, feel free to send me an email at coolcornucopia@outlook.com :email:.
 
 --
+Peace
 
-Peace :smile:
-
-coolcornucopia
+coolcornucopia :smile:
